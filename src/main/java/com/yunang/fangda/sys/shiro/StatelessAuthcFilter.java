@@ -1,5 +1,6 @@
 package com.yunang.fangda.sys.shiro;
 
+import com.yunang.fangda.utils.JackJson;
 import com.yunang.fangda.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.AccessControlFilter;
@@ -67,7 +68,7 @@ public class StatelessAuthcFilter extends AccessControlFilter {
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
         ResponseResult<String> result = new ResponseResult<>(false, "logout");
-//        httpServletResponse.getWriter().write(Objects.requireNonNull(JackJson.beanToJson(result)));
+        httpServletResponse.getWriter().write(Objects.requireNonNull(JackJson.beanToJson(result)));
     }
 
     //  Is it Ajax

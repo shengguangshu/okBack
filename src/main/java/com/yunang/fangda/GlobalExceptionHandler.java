@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -57,6 +58,11 @@ public class GlobalExceptionHandler {
         }
         if (exception instanceof HttpMessageNotReadableException) {
             res(response, "参数序列化异常，请仔细对比参数的类型");
+            exception.printStackTrace();
+            return;
+        }
+        if (exception instanceof HttpRequestMethodNotSupportedException) {
+            res(response, "请求方式错误");
             exception.printStackTrace();
             return;
         }

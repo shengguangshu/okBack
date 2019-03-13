@@ -11,7 +11,7 @@ spring:
   #限制上传文件大小，springboot默认限制为2M
   http:
     multipart:
-#      enabled: true
+      #      enabled: true
       #      单个文件大小
       max-file-size: 100MB
       #      单次请求文件大小，为了应对多个文件同时上传的情况

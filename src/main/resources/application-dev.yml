@@ -55,9 +55,9 @@ spring:
   jpa:
     database-platform: com.yunang.fangda.sys.jpa.MySQL5InnoDBDialectUtf8mb4
     hibernate:
-#      是否自动创建跟新表
+      #      是否自动创建跟新表
       ddl-auto: update
-#    解决 could not initialize proxy - no Session
+    #    解决 could not initialize proxy - no Session
     open-in-view: true
 #默认分页条数
 page:

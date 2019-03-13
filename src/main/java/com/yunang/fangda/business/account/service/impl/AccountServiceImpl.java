@@ -93,8 +93,7 @@ public class AccountServiceImpl implements AccountService {
         orders.add(new Sort.Order(Sort.Direction.DESC, "systemTimes"));
         orders.add(new Sort.Order(Sort.Direction.ASC, "account"));
         Specification<AccountModel> spec = queryTj(model);
-        PageRequest pageRequest = PageRequest.of(pageNow, pageSize, Sort.by(orders));
-//        Slice<AccountModel> page = jpa.findAll(spec, pageRequest);
+        PageRequest pageRequest = PageRequest.of(pageNow-1, pageSize, Sort.by(orders));
         Page<AccountModel> page = jpa.findAll(spec, pageRequest);
         if (!page.getContent().isEmpty())
             return new ResponseResult<>(true, "成功", page);

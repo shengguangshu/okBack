@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FangdaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FangdaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FangdaApplication.class, args);
+    }
 
 }

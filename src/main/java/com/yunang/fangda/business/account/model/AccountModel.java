@@ -1,5 +1,6 @@
 package com.yunang.fangda.business.account.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +42,7 @@ public class AccountModel implements Serializable {
     private String password;
 
     //    生成时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "system_times", nullable = false, columnDefinition = "TIMESTAMP")
     private Timestamp systemTimes;
 
