@@ -7,7 +7,6 @@ import com.yunang.fangda.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -93,7 +92,7 @@ public class AccountServiceImpl implements AccountService {
         orders.add(new Sort.Order(Sort.Direction.DESC, "systemTimes"));
         orders.add(new Sort.Order(Sort.Direction.ASC, "account"));
         Specification<AccountModel> spec = queryTj(model);
-        PageRequest pageRequest = PageRequest.of(pageNow-1, pageSize, Sort.by(orders));
+        PageRequest pageRequest = PageRequest.of(pageNow - 1, pageSize, Sort.by(orders));
         Page<AccountModel> page = jpa.findAll(spec, pageRequest);
         if (!page.getContent().isEmpty())
             return new ResponseResult<>(true, "成功", page);

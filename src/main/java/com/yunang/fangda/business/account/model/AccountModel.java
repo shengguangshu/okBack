@@ -2,6 +2,8 @@ package com.yunang.fangda.business.account.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,42 +21,42 @@ import java.sql.Timestamp;
  * @table
  * @remarks
  */
+@ApiModel(value = "账号表")
 @Slf4j
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//以下jpa注解
 @Entity(name = "account_table")
 @Table(comment = "账户表", appliesTo = "account_table")
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountModel implements Serializable {
-
+    @ApiModelProperty(value = "主键", example = "除新增外必填，由后台自动生成")
     @Id
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     @GeneratedValue(generator = "system-uuid")
     private String uuid;
-
-    @Column(name = "account", length = 32, unique = true, nullable = false)
+    @ApiModelProperty(value = "账号", example = "最大32位字符串")
+    @Column(name = "account", length = 32)
     private String account;
-
-    @Column(name = "password", length = 32, nullable = false)
+    @ApiModelProperty(value = "密码", example = "最大32位字符串")
+    @Column(name = "password", length = 32)
     private String password;
-
     //    生成时间
+    @ApiModelProperty(value = "生成时间", example = "yyyy-MM-dd HH:mm:ss GMT+8")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Column(name = "system_times", nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "system_times", columnDefinition = "TIMESTAMP")
     private Timestamp systemTimes;
-
     //    是否允许登录
-    @Column(name = "is_login", length = 1, nullable = false)
+    @ApiModelProperty(value = "是否允许登陆", example = "1:允许；2:不允许")
+    @Column(name = "is_login", length = 1)
     private Integer isLogin;
-
     //    个人资料
+    @ApiModelProperty(value = "个人资料", dataType = "com.yunang.fangda.business.account.model.UserModel")
     @OneToOne(targetEntity = UserModel.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "uuid")
     private UserModel user;
 
+    @ApiModelProperty(value = "数据版本信息", example = "修改删除时必填，从后台获取")
     @Version
     private long version;
 

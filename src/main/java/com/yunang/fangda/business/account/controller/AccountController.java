@@ -3,6 +3,9 @@ package com.yunang.fangda.business.account.controller;
 import com.yunang.fangda.business.account.model.AccountModel;
 import com.yunang.fangda.business.account.service.AccountService;
 import com.yunang.fangda.utils.ResponseResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
  * return result;
  * }
  */
+@Api(value = "账号接口", description = "账号接口")
 @Slf4j
 @RestController
 @RequestMapping("/account")
@@ -41,14 +45,18 @@ public class AccountController {
      * @param model
      * @return
      */
+    @ApiOperation(value = "账号分页查询")
     @RequestMapping(value = "/page/{pageNow}", method = RequestMethod.POST)
-    public ResponseResult<Page<AccountModel>> page(@PathVariable("pageNow") int pageNow,
+    public ResponseResult<Page<AccountModel>> page(@ApiParam(value = "当前页数", required = true, example = "1为第一页")
+                                                   @PathVariable("pageNow") int pageNow,
+                                                   @ApiParam(value = "账号实体", required = true, example = "至少传递一个属性，值可以为\"\"")
                                                    @RequestBody AccountModel model) {
         return service.findAll(pageNow, pageSize, model);
     }
-
+    @ApiOperation(value = "账号新增")
     @RequestMapping(value = "/account", method = RequestMethod.POST)
-    public ResponseResult<AccountModel> save(@RequestBody AccountModel model) {
+    public ResponseResult<AccountModel> save(@ApiParam(value = "账号实体", required = true, example = "根据业务填写必填项")
+                                             @RequestBody AccountModel model) {
         return service.save(model);
     }
 
@@ -58,8 +66,10 @@ public class AccountController {
      * @param uuid
      * @return
      */
+    @ApiOperation(value = "根据账号主键删除")
     @RequestMapping(value = "/account/{uuid}", method = RequestMethod.DELETE)
-    public ResponseResult<AccountModel> delete(@PathVariable("uuid") String uuid) {
+    public ResponseResult<AccountModel> delete(@ApiParam(value = "账号主键", required = true, example = "后台获取的主键")
+                                               @PathVariable("uuid") String uuid) {
         return service.delete(uuid);
     }
 
