@@ -1,6 +1,7 @@
 package com.yunang.fangda.business.jurisdiction.jpa;
 
 import com.yunang.fangda.business.account.model.AccountModel;
+import com.yunang.fangda.business.jurisdiction.model.JurisdictionModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -9,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @date:
  * @description:
  */
-public interface JurisdictionJpa extends JpaSpecificationExecutor<AccountModel>,
-        JpaRepository<AccountModel, String> {
+public interface JurisdictionJpa extends JpaSpecificationExecutor<JurisdictionModel>,
+        JpaRepository<JurisdictionModel, String> {
 }

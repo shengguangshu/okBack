@@ -10,12 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountJpa jpa;
 
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<AccountModel> save(AccountModel model) {
         if (model == null)
@@ -48,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<AccountModel> delete(String uuid) {
         if (uuid == null || uuid.isEmpty())
@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
         return new ResponseResult<>(true, "成功", null);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<AccountModel> update(AccountModel model) {
         if (model != null && model.getUuid() != null && !model.getUuid().isEmpty()) {
