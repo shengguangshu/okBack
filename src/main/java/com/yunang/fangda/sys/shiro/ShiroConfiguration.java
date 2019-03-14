@@ -80,17 +80,13 @@ public class ShiroConfiguration {
 //        必须注入securityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 //        权限不足
-        Map<String, Filter> filters = new HashMap<>(16);
+        Map<String, Filter> filters = new HashMap<>(0);
         filters.put("statelessAuthcFilter", new StatelessAuthcFilter());
         shiroFilterFactoryBean.setFilters(filters);
 //拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/favicon.ico", "anon");
-        filterChainDefinitionMap.put("/swagger**", "anon");
-        filterChainDefinitionMap.put("/swagger**/**", "anon");
-        filterChainDefinitionMap.put("/webjars/**", "anon");
-        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/v2/api-docs", "anon");
         filterChainDefinitionMap.put("/login/**", "anon");
         filterChainDefinitionMap.put("/file/**", "anon");
         filterChainDefinitionMap.put("/websocket", "anon");
