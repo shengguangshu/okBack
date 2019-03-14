@@ -65,9 +65,9 @@ public class ExcelModelExportUtils {
      *
      * @param sheet 操作的sheet
      * @param datas 数据集合
-     * @throws Exception
+     * @
      */
-    private void assembleCurrency(HSSFSheet sheet, List<String[]> datas) throws Exception {
+    private void assembleCurrency(HSSFSheet sheet, List<String[]> datas) {
 //        获取标题行
         HSSFRow row1 = sheet.getRow(0);
 //        获取标题行总列数
@@ -433,25 +433,27 @@ public class ExcelModelExportUtils {
 //    }
 
     //下载
-    public void download2(String path, String fileName, HttpServletResponse response) throws Exception {
+    public void download2(String path, String fileName, HttpServletResponse response) throws IOException {
         // path是指欲下载的文件的路径。
         File file = new File(path, fileName);
-        // 以流的形式下载文件。
-        InputStream fis = new BufferedInputStream(new FileInputStream(path + "/" + fileName));
-        byte[] buffer = new byte[fis.available()];
-        fis.read(buffer);
-        fis.close();
-        // 清空response
-        response.reset();
-        // 设置response的Header
-        OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
-        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
-        response.addHeader("Content-Disposition", "attachment;filename="
-                + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
-        response.addHeader("Content-Length", "" + file.length());
-        toClient.write(buffer);
-        toClient.flush();
-        toClient.close();
+        if (file.length() > 0) {
+            // 以流的形式下载文件。
+            InputStream fis = new BufferedInputStream(new FileInputStream(path + "/" + fileName));
+            byte[] buffer = new byte[fis.available()];
+            fis.read(buffer);
+            fis.close();
+            // 清空response
+            response.reset();
+            // 设置response的Header
+            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+            response.addHeader("Content-Disposition", "attachment;filename="
+                    + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
+            response.addHeader("Content-Length", "" + file.length());
+            toClient.write(buffer);
+            toClient.flush();
+            toClient.close();
+        }
     }
 
 

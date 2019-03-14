@@ -59,6 +59,10 @@ spring:
       ddl-auto: update
     #    解决 could not initialize proxy - no Session
     open-in-view: true
+  #启动aop配置
+  spring:
+    aop:
+      auto: true
 #默认分页条数
 page:
   pageSize: 15

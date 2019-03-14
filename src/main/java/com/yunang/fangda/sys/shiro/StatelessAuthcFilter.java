@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -25,10 +26,10 @@ public class StatelessAuthcFilter extends AccessControlFilter {
      * @param servletResponse
      * @param o
      * @return
-     * @throws Exception
+     * @
      */
     @Override
-    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
+    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) {
         return false;
     }
 
@@ -38,10 +39,10 @@ public class StatelessAuthcFilter extends AccessControlFilter {
      * @param servletRequest
      * @param servletResponse
      * @return
-     * @throws Exception
+     * @
      */
     @Override
-    protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
+    protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) {
 //        To get token,you can use head/Cokie or others.
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String lTokenD = request.getHeader("LTokenD");
@@ -63,12 +64,16 @@ public class StatelessAuthcFilter extends AccessControlFilter {
     }
 
     //    Is no Token
-    private void tokenError(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
+    private void tokenError(ServletRequest servletRequest, ServletResponse servletResponse){
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
         ResponseResult<String> result = new ResponseResult<>(false, "logout");
-        httpServletResponse.getWriter().write(Objects.requireNonNull(JackJson.beanToJson(result)));
+        try {
+            httpServletResponse.getWriter().write(Objects.requireNonNull(JackJson.beanToJson(result)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //  Is it Ajax

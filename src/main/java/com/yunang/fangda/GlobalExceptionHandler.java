@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,206 +23,44 @@ import java.io.PrintWriter;
  */
 @Slf4j
 @ControllerAdvice
+@RestController
 public class GlobalExceptionHandler {
 
-    private static final ResponseResult<String> result = new ResponseResult<>(false, "");
-
-    /**
-     * 统一异常处理
-     *
-     * @param request
-     * @param response
-     * @param exception
-     * @throws Exception
-     */
-    @ExceptionHandler
-    public void exception(HttpServletRequest request,
-                          HttpServletResponse response,
-                          Exception exception) throws Exception {
-//        exception.printStackTrace();
-//        log.debug("ERROR::::：" + exception.getLocalizedMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getCause() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getSuppressed()) + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getStackTrace()) + "::::::" + new Date());
-        //        权限不足
-        if ((exception instanceof UnauthorizedException) || (exception instanceof AuthorizationException)) {
-            res(response, "权限不足");
-            exception.printStackTrace();
-            return;
-        }
-//        文件不存在
-        if (exception instanceof FileNotFoundException) {
-            res(response, "文件不存在");
-            exception.printStackTrace();
-            return;
-        }
-        if (exception instanceof HttpMessageNotReadableException) {
-            res(response, "参数序列化异常，请仔细对比参数的类型");
-            exception.printStackTrace();
-            return;
-        }
-        if (exception instanceof HttpRequestMethodNotSupportedException) {
-            res(response, "请求方式错误");
-            exception.printStackTrace();
-            return;
-        }
-        res(response, "未定义的的其它错误");
-        exception.printStackTrace();
+    @ExceptionHandler(value = UnauthorizedException.class)
+    public ResponseResult<String> unauthorizedException(Exception exception) {
+        return new ResponseResult<>(false, "权限不足");
     }
 
+    @ExceptionHandler(value = AuthorizationException.class)
+    public ResponseResult<String> authorizationException(Exception exception) {
+        return new ResponseResult<>(false, "权限不足");
+    }
 
-//    /**
-//     * 文件不存在
-//     *
-//     * @param request
-//     * @param response
-//     * @param exception
-//     * @throws Exception
-//     */
-//    @ExceptionHandler(value = TemplateInputException.class)
-//    public void templateInputException(HttpServletRequest request,
-//                                       HttpServletResponse response,
-//                                       Exception exception) throws Exception {
-//        //        exception.printStackTrace();
-//        log.debug("ERROR::::：" + exception.getLocalizedMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getCause() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getSuppressed()) + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getStackTrace()) + "::::::" + new Date());
-////        boolean b = isAjaxRequest(request);
-////        if (b) {
-//        res(response, "系统找不到指定的文件夹");
-////        } else {
-////            response.sendRedirect("/views/error/500");
-////        }
-//    }
-//
-//    /**
-//     * 文件不存在
-//     *
-//     * @param request
-//     * @param response
-//     * @param exception
-//     * @throws Exception
-//     */
-//    @ExceptionHandler(value = FileNotFoundException.class)
-//    public void fileNotFoundException(HttpServletRequest request,
-//                                      HttpServletResponse response,
-//                                      Exception exception) throws Exception {
-//        //        exception.printStackTrace();
-//        log.debug("ERROR::::：" + exception.getLocalizedMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getCause() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getSuppressed()) + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getStackTrace()) + "::::::" + new Date());
-////        boolean b = isAjaxRequest(request);
-////        if (b) {
-//        res(response, "系统找不到指定的文件夹");
-////        } else {
-////            response.sendRedirect("/views/error/500");
-////        }
-//    }
-//
-//    /**
-//     * 密码错误
-//     *
-//     * @param request
-//     * @param exception
-//     * @return
-//     */
-//    @ExceptionHandler(value = org.apache.ibatis.exceptions.PersistenceException.class)
-//    public void persistenceException(HttpServletRequest request,
-//                                     HttpServletResponse response,
-//                                     Exception exception) throws Exception {
-//        //        exception.printStackTrace();
-//        log.debug("ERROR::::：" + exception.getLocalizedMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getCause() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getSuppressed()) + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getStackTrace()) + "::::::" + new Date());
-//        boolean b = isAjaxRequest(request);
-//        if (b) {
-//            res(response, "数据库错误");
-//        } else {
-//            response.sendRedirect("/views/error/500");
-//        }
-//    }
-//
-//    /**
-//     * 密码错误
-//     *
-//     * @param request
-//     * @param exception
-//     * @return
-//     */
-//    @ExceptionHandler(value = IncorrectCredentialsException.class)
-//    public void incorrectCredentialsException(HttpServletRequest request,
-//                                              HttpServletResponse response,
-//                                              Exception exception) throws Exception {
-//        //        exception.printStackTrace();
-//        log.debug("ERROR::::：" + exception.getLocalizedMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getCause() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getSuppressed()) + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getStackTrace()) + "::::::" + new Date());
-//        boolean b = isAjaxRequest(request);
-//        if (b) {
-//            res(response, "账号密码错误");
-//        } else {
-//            response.sendRedirect("/error/403");
-//        }
-//    }
-//
-//    /**
-//     * 权限不足
-//     *
-//     * @param request
-//     * @param exception
-//     * @return
-//     */
-//    @ExceptionHandler(value = AuthorizationException.class)
-//    public void authorizationException(HttpServletRequest request,
-//                                       HttpServletResponse response,
-//                                       Exception exception) throws Exception {
-//        //        exception.printStackTrace();
-//        log.debug("ERROR::::：" + exception.getLocalizedMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getCause() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getSuppressed()) + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getStackTrace()) + "::::::" + new Date());
-//        boolean b = isAjaxRequest(request);
-//        if (b) {
-//            res(response, "权限不足");
-//        } else {
-//            response.sendRedirect("/views/error/403");
-//        }
-//    }
-//
-//    /**
-//     * 权限不足
-//     *
-//     * @param request
-//     * @param exception
-//     * @return
-//     */
-//    @ExceptionHandler(value = UnauthorizedException.class)
-//    public void unauthorizedException(HttpServletRequest request,
-//                                      HttpServletResponse response,
-//                                      Exception exception) throws Exception {
-//        //        exception.printStackTrace();
-//        log.debug("ERROR::::：" + exception.getLocalizedMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getCause() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getSuppressed()) + "::::::" + new Date());
-//        log.debug("ERROR::::：" + exception.getMessage() + "::::::" + new Date());
-//        log.debug("ERROR::::：" + Arrays.toString(exception.getStackTrace()) + "::::::" + new Date());
-//        boolean b = isAjaxRequest(request);
-//        if (b) {
-//            res(response, "权限不足");
-//        } else {
-//            response.sendRedirect("/views/error/403");
-//        }
-//    }
+    @ExceptionHandler(value = FileNotFoundException.class)
+    public ResponseResult<String> fileNotFoundException(Exception exception) {
+        return new ResponseResult<>(false, "文件不存在");
+    }
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseResult<String> httpMessageNotReadableException(Exception exception) {
+        return new ResponseResult<>(false, "参数序列化错误");
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public ResponseResult<String> httpRequestMethodNotSupportedException(Exception exception) {
+        return new ResponseResult<>(false, "请求方式错误");
+    }
+
+    /**
+     * 此方法必须在最后
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = Exception.class)
+    public ResponseResult<String> exception(Exception exception) {
+        return new ResponseResult<>(false, "其它未定义的错误");
+    }
 
     /**
      * 判断是否是ajax

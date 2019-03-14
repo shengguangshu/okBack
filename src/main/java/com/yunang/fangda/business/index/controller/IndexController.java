@@ -1,13 +1,11 @@
 package com.yunang.fangda.business.index.controller;
 
-import com.yunang.fangda.utils.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -22,7 +20,7 @@ import java.io.IOException;
 @RestController
 public class IndexController {
 
-    @ApiOperation(value = "接口页",hidden = true)
+    @ApiOperation(value = "接口页", hidden = true)
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public void index(HttpServletResponse response) throws IOException {
         response.sendRedirect("/swagger-ui.html");

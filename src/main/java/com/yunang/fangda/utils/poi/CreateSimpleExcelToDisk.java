@@ -7,7 +7,7 @@ public class CreateSimpleExcelToDisk {
 //    /**
 //     * @功能：手工构建一个简单格式的Excel
 //     */
-//    private static List<OpcDatas2Model> getStudent() throws Exception
+//    private static List<OpcDatas2Model> getStudent()
 //    {
 //        List list = new ArrayList();
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd");
@@ -28,9 +28,9 @@ public class CreateSimpleExcelToDisk {
 //     *
 //     * @param list
 //     * @return
-//     * @throws Exception
+//     * @
 //     */
-//    public static String excels(List<PatentDataPutModel> list) throws Exception {
+//    public static String excels(List<PatentDataPutModel> list)  {
 //        if (list != null && list.size() > 0) {
 //            // 第一步，创建一个webbook，对应一个Excel文件
 //            HSSFWorkbook wb = new HSSFWorkbook();
@@ -161,7 +161,7 @@ public class CreateSimpleExcelToDisk {
 //        return null;
 //    }
 //
-//    public static String excels4(List<String[]> list, String na) throws Exception {
+//    public static String excels4(List<String[]> list, String na)  {
 //        if (list != null && list.size() > 0) {
 //            // 第一步，创建一个webbook，对应一个Excel文件
 //            HSSFWorkbook wb = new HSSFWorkbook();
@@ -341,7 +341,7 @@ public class CreateSimpleExcelToDisk {
 //        return null;
 //    }
 //
-//    public static String excels2(String names, List<HrzrlFxModel> list) throws Exception {
+//    public static String excels2(String names, List<HrzrlFxModel> list)  {
 //        if (list != null && list.size() > 0) {
 //            // 第一步，创建一个webbook，对应一个Excel文件
 //            HSSFWorkbook wb = new HSSFWorkbook();
@@ -399,7 +399,7 @@ public class CreateSimpleExcelToDisk {
 //        return null;
 //    }
 //
-//    public static String excels3(String names, List<HrzrlFxModel> list) throws Exception {
+//    public static String excels3(String names, List<HrzrlFxModel> list)  {
 //        if (list != null && list.size() > 0) {
 //            // 第一步，创建一个webbook，对应一个Excel文件
 //            HSSFWorkbook wb = new HSSFWorkbook();
@@ -472,9 +472,9 @@ public class CreateSimpleExcelToDisk {
 //     * @param data     String 表格数据
 //     * @param lastData String 底部平均值，也可以在确保相同格式的情况下传入其它值
 //     * @param response HttpServletResponse
-//     * @throws Exception
+//     * @
 //     */
-//    public static String strToJs(String name, String title, String data, String lastData, HttpServletResponse response) throws Exception {
+//    public static String strToJs(String name, String title, String data, String lastData, HttpServletResponse response)  {
 //        JSONObject jsonObject = new JSONObject();
 //        jsonObject.put("name", name);
 //        JSONArray jsonArray = new JSONArray();
@@ -524,9 +524,9 @@ public class CreateSimpleExcelToDisk {
 //     * @param json JSONObject 除最底部的平均值以外的所有数据
 //     * @param js3  JSONObject 平均值数据
 //     * @return String 生成的excel的文件名称
-//     * @throws Exception
+//     * @
 //     */
-//    public static String excels_ajax(JSONObject json, JSONObject js3) throws Exception {
+//    public static String excels_ajax(JSONObject json, JSONObject js3)  {
 //        if (json != null) {
 //            // 第一步，创建一个webbook，对应一个Excel文件
 //            HSSFWorkbook wb = new HSSFWorkbook();

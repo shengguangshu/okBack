@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,7 @@ public class AccountController {
      * @return
      */
     @ApiOperation(value = "账号分页查询")
+    @RequiresPermissions(value = "account-page")
     @RequestMapping(value = "/page/{pageNow}", method = RequestMethod.POST)
     public ResponseResult<Page<AccountModel>> page(@ApiParam(value = "当前页数", required = true, example = "1为第一页")
                                                    @PathVariable("pageNow") int pageNow,
@@ -53,7 +55,9 @@ public class AccountController {
                                                    @RequestBody AccountModel model) {
         return service.findAll(pageNow, pageSize, model);
     }
+
     @ApiOperation(value = "账号新增")
+    @RequiresPermissions(value = "account-save")
     @RequestMapping(value = "/account", method = RequestMethod.POST)
     public ResponseResult<AccountModel> save(@ApiParam(value = "账号实体", required = true, example = "根据业务填写必填项")
                                              @RequestBody AccountModel model) {
@@ -67,6 +71,8 @@ public class AccountController {
      * @return
      */
     @ApiOperation(value = "根据账号主键删除")
+//    @RequiresRoles(value = {"admin"})
+    @RequiresPermissions(value = "account-delete")
     @RequestMapping(value = "/account/{uuid}", method = RequestMethod.DELETE)
     public ResponseResult<AccountModel> delete(@ApiParam(value = "账号主键", required = true, example = "后台获取的主键")
                                                @PathVariable("uuid") String uuid) {

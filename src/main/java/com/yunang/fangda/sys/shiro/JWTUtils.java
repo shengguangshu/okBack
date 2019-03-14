@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JWTUtils {
-    public static final String SECRET = "ldtoken";
+    final static String secret = "ldtoken";
 
     //    生成token
     public static String creaToken(String account, String id, String orgid) throws Exception {
@@ -33,14 +33,14 @@ public class JWTUtils {
 //                过期时间
                 .withExpiresAt(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 12)))
 //                mi yao
-                .sign(Algorithm.HMAC256(SECRET));
+                .sign(Algorithm.HMAC256(secret));
     }
 
     //    解密token
     public static Map<String, Claim> verifToken(String token) {
         DecodedJWT jwt = null;
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret)).build();
             jwt = verifier.verify(token);
         } catch (Exception e) {
             return null;
@@ -51,14 +51,21 @@ public class JWTUtils {
     //    获取值
     public static Claim getApp(String token, String k) {
         Map<String, Claim> claimMap = verifToken(token);
-        return claimMap.get(k);
+        if (claimMap != null && claimMap.containsKey(k)) {
+            return claimMap.get(k);
+        } else {
+            return null;
+        }
     }
 
     public static String getAcc(HttpServletRequest request) {
         String lTokenD = request.getHeader("LTokenD");
         Map<String, Claim> map = JWTUtils.verifToken(lTokenD);
-        String sub = map.get("sub").asString();
-        return sub;
+        if (map != null && map.containsKey("sub")) {
+            return map.get("sub").asString();
+        } else {
+            return null;
+        }
     }
 
     public static String getAccId(HttpServletRequest request) {
