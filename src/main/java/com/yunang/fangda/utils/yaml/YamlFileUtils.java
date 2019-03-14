@@ -18,8 +18,8 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class YamlFileUtils {
 
-    private static String fileModel;
-    private static String dowPath;
-    private static String upPath;
-    private static String upPrefix;
+    private String fileModel;
+    private String dowPath;
+    private String upPath;
+    private String upPrefix;
 }

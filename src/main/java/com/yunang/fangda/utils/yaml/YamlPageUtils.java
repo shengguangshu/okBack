@@ -20,5 +20,5 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class YamlPageUtils {
 
-    public static int pageSize;
+    private int pageSize;
 }
