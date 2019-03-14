@@ -33,8 +33,6 @@ public class JurisdictionModel implements Serializable {
 
     @ApiModelProperty(value = "主键")
     @Id
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    @GeneratedValue(generator = "system-uuid")
     private String uuid;
     @ApiModelProperty(value = "权限名称")
     @Column(name = "jur_name", length = 32)
@@ -45,7 +43,7 @@ public class JurisdictionModel implements Serializable {
     @ApiModelProperty(value = "权限父级")
     @Column(name = "jur_parent", length = 32)
     private String jurParent;
-    @ApiModelProperty(value = "权限类型")
+    @ApiModelProperty(value = "权限类型",example = "0：菜单 1：按钮")
     @Column(name = "jur_type", length = 32)
     private Integer jurType;
 }

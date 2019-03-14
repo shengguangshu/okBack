@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
@@ -49,6 +50,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public ResponseResult<String> httpRequestMethodNotSupportedException(Exception exception) {
         return new ResponseResult<>(false, "请求方式错误");
+    }
+
+    @ExceptionHandler(value = EntityNotFoundException.class)
+    public ResponseResult<String> entityNotFoundException(Exception exception) {
+        return new ResponseResult<>(false, "数据不存在");
     }
 
     /**

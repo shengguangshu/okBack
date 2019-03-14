@@ -12,17 +12,18 @@ import java.util.List;
  */
 public interface JurisdictionService {
     /**
-     * 批量新增权限
+     * 重置所有权限
      *
      * @param list
      * @return
      */
-    ResponseResult<JurisdictionModel> saveAll(List<JurisdictionModel> list);
+    ResponseResult<String> setJurs(List<JurisdictionModel> list);
 
     /**
-     * 删除所有权限
+     * 获取所有的权限
      *
      * @return
      */
-    ResponseResult<JurisdictionModel> deleteAll();
+    ResponseResult<List<JurisdictionModel>> findAll();
+
 }

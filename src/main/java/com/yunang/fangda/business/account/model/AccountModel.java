@@ -58,6 +58,6 @@ public class AccountModel implements Serializable {
 
     @ApiModelProperty(value = "数据版本信息", example = "修改删除时必填，从后台获取")
     @Version
-    private long version;
+    private Long version;
 
 }

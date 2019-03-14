@@ -60,15 +60,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<AccountModel> update(AccountModel model) {
-        if (model != null && model.getUuid() != null && !model.getUuid().isEmpty()) {
-            AccountModel one = jpa.getOne(model.getUuid());
-            if (model.getPassword() != null && !model.getPassword().isEmpty())
-                one.setPassword(model.getPassword());
-            if (model.getIsLogin() != null && model.getIsLogin() > 0)
-                one.setIsLogin(model.getIsLogin());
-            return new ResponseResult<>(true, "成功", null);
-        } else
-            return new ResponseResult<>(false, "主键不能为空", null);
+        return new ResponseResult<>(false, "主键不能为空", null);
     }
 
     @Override

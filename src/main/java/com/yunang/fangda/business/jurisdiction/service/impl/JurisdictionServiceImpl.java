@@ -25,15 +25,19 @@ public class JurisdictionServiceImpl implements JurisdictionService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResponseResult<JurisdictionModel> saveAll(List<JurisdictionModel> list) {
+    public ResponseResult<String> setJurs(List<JurisdictionModel> list) {
+        jpa.deleteAll();
         jpa.saveAll(list);
         return new ResponseResult<>(true, "成功");
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResponseResult<JurisdictionModel> deleteAll() {
-        jpa.deleteAll();
-        return new ResponseResult<>(true, "成功");
+    public ResponseResult<List<JurisdictionModel>> findAll() {
+        List<JurisdictionModel> list = jpa.findAll();
+        if (list.isEmpty()) {
+            return new ResponseResult<>(false, "未查询到记录");
+        } else {
+            return new ResponseResult<>(true, "成功", list);
+        }
     }
 }
