@@ -35,7 +35,7 @@ public class LoginController {
     @ApiOperation(value = "获取token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseResult<String> login(@ApiParam(value = "登陆实体", required = true)
-                                        @Valid @RequestBody LoginModel model, BindingResult bindingResult) throws Exception{
+                                        @Valid @RequestBody LoginModel model, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             return new ResponseResult<>(false, bindingResult.getAllErrors().get(0).getDefaultMessage());
         }

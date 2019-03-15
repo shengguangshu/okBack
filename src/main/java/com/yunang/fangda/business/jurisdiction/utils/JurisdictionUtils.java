@@ -4,7 +4,6 @@ import com.yunang.fangda.business.jurisdiction.model.JurisdictionModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author: LD

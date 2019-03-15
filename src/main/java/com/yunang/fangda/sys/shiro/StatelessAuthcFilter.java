@@ -64,7 +64,7 @@ public class StatelessAuthcFilter extends AccessControlFilter {
     }
 
     //    Is no Token
-    private void tokenError(ServletRequest servletRequest, ServletResponse servletResponse){
+    private void tokenError(ServletRequest servletRequest, ServletResponse servletResponse) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");

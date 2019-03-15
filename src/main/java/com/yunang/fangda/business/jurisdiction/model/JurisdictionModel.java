@@ -7,12 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Table;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
@@ -43,7 +41,7 @@ public class JurisdictionModel implements Serializable {
     @ApiModelProperty(value = "权限父级")
     @Column(name = "jur_parent", length = 32)
     private String jurParent;
-    @ApiModelProperty(value = "权限类型",example = "0：菜单 1：按钮")
+    @ApiModelProperty(value = "权限类型", example = "0：菜单 1：按钮")
     @Column(name = "jur_type", length = 32)
     private Integer jurType;
 }

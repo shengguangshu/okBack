@@ -9,13 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Table;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.Version;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +26,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "depardtment_table")
-@Table(comment = "部门表", appliesTo = "depardtment_table")
+@Entity(name = "department_table")
+@Table(comment = "部门表", appliesTo = "department_table")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DepartmentModel implements Serializable {
 
