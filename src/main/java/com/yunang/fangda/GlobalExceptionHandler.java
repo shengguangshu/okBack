@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 
 /**
  * @author LD
@@ -55,6 +56,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ResponseResult<String> entityNotFoundException(Exception exception) {
         return new ResponseResult<>(false, "数据不存在");
+    }
+
+    @ExceptionHandler(value = ConnectException.class)
+    public ResponseResult<String> connectException(Exception exception) {
+        return new ResponseResult<>(false, "数据库可能无法正常通信");
     }
 
     /**
