@@ -20,4 +20,6 @@ public interface PositionService {
     ResponseResult<PositionModel> getOne(String uuid);
 
     ResponseResult<List<PositionModel>> findAll();
+
+    ResponseResult<List<PositionModel>> findByPosParent(String posParent);
 }

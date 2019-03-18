@@ -28,7 +28,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<AuthorityModel> setPostIdAndJurId(AuthorityModel model) {
-        JurisdictionModel one = jpa.findByAutPostIdAndAutJurId(model.getAutPostId(), model.getAutJurId());
+        AuthorityModel one = jpa.findByAutPostIdAndAutJurId(model.getAutPostId(), model.getAutJurId());
         if (one != null) {
             jpa.deleteById(one.getUuid());
         } else {

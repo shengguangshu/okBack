@@ -74,7 +74,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (!all.isEmpty()) {
             List<DepartmentModel> list = dg(all);
             if (list.size() > 0) {
-                return new ResponseResult<>(true, "成功");
+                return new ResponseResult<>(true, "成功",list);
             } else {
                 return new ResponseResult<>(false, "未查询到记录");
             }

@@ -30,7 +30,7 @@ public class DepartmentController {
     private DepartmentService service;
 
     @ApiOperation(value = "查询所有部门")
-    @RequiresPermissions(value = "department-all")
+//    @RequiresPermissions(value = "department-all")
     @RequestMapping(value = "/department/all", method = RequestMethod.GET)
     public ResponseResult<List<DepartmentModel>> findAll() {
         return service.findAll();

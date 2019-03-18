@@ -72,9 +72,9 @@ public class PositionServiceImpl implements PositionService {
     public ResponseResult<List<PositionModel>> findAll() {
         List<PositionModel> all = jpa.findAll();
         if (!all.isEmpty()) {
-            List<PositionModel> list = dg(all);
+            List<PositionModel> list = dg(all, null);
             if (list.size() > 0) {
-                return new ResponseResult<>(true, "成功");
+                return new ResponseResult<>(true, "成功", list);
             } else {
                 return new ResponseResult<>(false, "未查询到记录");
             }
@@ -82,10 +82,12 @@ public class PositionServiceImpl implements PositionService {
         return new ResponseResult<>(false, "未查询到记录");
     }
 
-    private static List<PositionModel> dg(List<PositionModel> list) {
+    private static List<PositionModel> dg(List<PositionModel> list, String parent) {
+        parent = parent == null ? "0" : parent;
         List<PositionModel> all = new ArrayList<>();
+        final String s = parent;
         list.forEach(k -> {
-            if (k.getPosParent().equals("0")) {
+            if (k.getPosParent().equals(s)) {
                 all.add(findChildren(k, list));
             }
         });
@@ -99,5 +101,19 @@ public class PositionServiceImpl implements PositionService {
             }
         }
         return treeNode;
+    }
+
+    @Override
+    public ResponseResult<List<PositionModel>> findByPosParent(String posParent) {
+        List<PositionModel> list = jpa.findByPosParent(posParent);
+        if (list.size() > 0) {
+            List<PositionModel> dg = dg(list, posParent);
+            if (dg.size() > 0) {
+                return new ResponseResult<>(true, "成功", dg);
+            } else {
+                return new ResponseResult<>(false, "未查询到记录");
+            }
+        }
+        return new ResponseResult<>(false, "未查询到记录");
     }
 }

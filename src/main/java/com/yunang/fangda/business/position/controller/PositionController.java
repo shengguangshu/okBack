@@ -36,6 +36,13 @@ public class PositionController {
         return service.findAll();
     }
 
+    @ApiOperation(value = "根据部门id查询")
+//    @RequiresPermissions(value = "position-byDepId")
+    @RequestMapping(value = "/byDepId/{depId}", method = RequestMethod.GET)
+    public ResponseResult<List<PositionModel>> byDepId(@PathVariable("depId") String depId) {
+        return service.findByPosParent(depId);
+    }
+
     @ApiOperation(value = "新增")
     @RequiresPermissions(value = "position-save")
     @RequestMapping(value = "/position", method = RequestMethod.POST)

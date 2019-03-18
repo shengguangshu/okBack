@@ -4,6 +4,8 @@ import com.yunang.fangda.business.position.model.PositionModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.List;
+
 /**
  * @author ld
  * @name 职位
@@ -12,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  */
 public interface PositionJpa extends JpaSpecificationExecutor<PositionModel>,
         JpaRepository<PositionModel, String> {
+
+    List<PositionModel> findByPosParent(String posParent);
 
 }

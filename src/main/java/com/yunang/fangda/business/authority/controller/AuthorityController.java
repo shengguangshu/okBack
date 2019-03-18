@@ -49,7 +49,7 @@ public class AuthorityController {
     }
 
     @ApiOperation(value = "设置职位权限")
-    @RequiresPermissions(value = "authority-setPostIdAndJurId")
+//    @RequiresPermissions(value = "authority-setPostIdAndJurId")
     @RequestMapping(value = "/authority", method = RequestMethod.POST)
     public ResponseResult<AuthorityModel> setPostIdAndJurId(@ApiParam(value = "实体", required = true, example = "根据业务填写必填项")
                                                             @RequestBody AuthorityModel model) {
