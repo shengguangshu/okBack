@@ -7,6 +7,7 @@ import com.yunang.fangda.utils.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,8 @@ public class JurisdictionController {
     private JurisdictionService service;
 
     @ApiOperation(value = "权限重置接口")
-    @RequiresRoles(value = {"admin"})
+//    @RequiresRoles(value = {"admin"})
+//    @RequiresPermissions(value = {"jurisdiction-reset"})
     @RequestMapping(value = "/setJurs", method = RequestMethod.GET)
     public ResponseResult<String> setJurs() {
         return service.setJurs(new JurisdictionUtils().getDatas());

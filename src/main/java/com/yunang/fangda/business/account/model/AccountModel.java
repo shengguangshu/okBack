@@ -41,20 +41,24 @@ public class AccountModel implements Serializable {
     @ApiModelProperty(value = "密码", example = "最大32位字符串")
     @Column(name = "password", length = 32)
     private String password;
-    //    生成时间
     @ApiModelProperty(value = "生成时间", example = "yyyy-MM-dd HH:mm:ss GMT+8")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "system_times", columnDefinition = "TIMESTAMP")
     private Timestamp systemTimes;
-    //    是否允许登录
     @ApiModelProperty(value = "是否允许登陆", example = "1:允许；2:不允许")
     @Column(name = "is_login", length = 1)
     private Integer isLogin;
-    //    个人资料
     @ApiModelProperty(value = "个人资料", dataType = "com.yunang.fangda.business.account.model.UserModel")
     @OneToOne(targetEntity = UserModel.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "uuid")
     private UserModel user;
+    @ApiModelProperty(value = "部门", example = "选择部门")
+    @Column(name = "dep_id", length = 32)
+    private String depId;
+    @ApiModelProperty(value = "职位", example = "选择职位")
+    @Column(name = "pos_id", length = 32)
+    private String posId;
+
 
     @ApiModelProperty(value = "数据版本信息", example = "修改删除时必填，从后台获取")
     @Version

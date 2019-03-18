@@ -3,6 +3,8 @@ package com.yunang.fangda.sys.shiro;
 import com.auth0.jwt.interfaces.Claim;
 import com.yunang.fangda.business.account.model.AccountModel;
 import com.yunang.fangda.business.account.service.AccountService;
+import com.yunang.fangda.business.authority.service.AuthorityService;
+import com.yunang.fangda.business.jurisdiction.model.JurisdictionModel;
 import com.yunang.fangda.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -16,6 +18,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -23,8 +26,8 @@ public class StatelessRealm extends AuthorizingRealm {
 
     @Resource
     private AccountService accountService;
-//    @Resource
-//    private QxfyService qxfyService;
+    @Resource
+    private AuthorityService authorityService;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -38,33 +41,13 @@ public class StatelessRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//        try {
-//            AccountModel token = (AccountModel) arg0.getPrimaryPrincipal();
-//            AccountModel model = new AccountModel();
-//            model.setUuid(token.getAccount());
-//            ResponseResult<List<AccountModel>> result = accountService.findByAccount(model);
-//            if (result.isSuccess()) {
-//                info.addRole("user");
-//                ResponseResult<List<QxglModel>> result1 = qxfyService.findByAccId(token.getUuid());
-//                if (result1.isSuccess()) {
-//                    result1.getData().forEach(k -> {
-//                        if (k.getIco().equals("1")) {
-//                            info.addStringPermission(k.getQxbs());
-//                        }
-//                    });
-//                }
-//            } else {
-//                AdminModel model1 = new AdminModel();
-//                model1.setAccount(token.getAccount());
-//                ResponseResult<AccountModel> result1 = accountService.getAdminByAccount(model1);
-//                if (result1.isSuccess()) {
-//                    info.addRole("admin");
-//                }
-//            }
-//            return info;
-//        } catch (Exception e) {
-//            return info;
-//        }
+        AccountModel token = (AccountModel) arg0.getPrimaryPrincipal();
+        ResponseResult<List<JurisdictionModel>> result = authorityService.findByAutPosId(token.getPosId());
+        if (result.isSuccess()) {
+            result.getData().forEach(k -> {
+                info.addStringPermission(k.getJurFlag());
+            });
+        }
         return info;
     }
 

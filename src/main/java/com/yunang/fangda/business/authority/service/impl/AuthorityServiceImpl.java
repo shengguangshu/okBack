@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,11 +39,36 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public ResponseResult<List<JurisdictionModel>> findByAutPosId(String autPosId) {
-        List<JurisdictionModel> list = jpa.findByAutPostId(autPosId);
+        List<Object[]> list = jpa.findJurisdictionModelByAutPostId(autPosId);
         if (list.size() > 0) {
-            return new ResponseResult<>(true, "成功", list);
+            List<JurisdictionModel> list1 = new ArrayList<>();
+            list.forEach(k -> {
+                JurisdictionModel model = new JurisdictionModel((String) k[0], (String) k[1], (String) k[2], (String) k[3], (Integer) k[4], new ArrayList<>());
+                list1.add(model);
+            });
+            List<JurisdictionModel> dg = dg(list1);
+            return new ResponseResult<>(true, "成功", dg);
         } else {
             return new ResponseResult<>(false, "未查询到记录");
         }
+    }
+
+    private static List<JurisdictionModel> dg(List<JurisdictionModel> list) {
+        List<JurisdictionModel> all = new ArrayList<>();
+        list.forEach(k -> {
+            if (k.getJurParent().equals("0")) {
+                all.add(findChildren(k, list));
+            }
+        });
+        return all;
+    }
+
+    private static JurisdictionModel findChildren(JurisdictionModel treeNode, List<JurisdictionModel> treeNodes) {
+        for (JurisdictionModel it : treeNodes) {
+            if (treeNode.getUuid().equals(it.getJurParent())) {
+                treeNode.getList().add(findChildren(it, treeNodes));
+            }
+        }
+        return treeNode;
     }
 }

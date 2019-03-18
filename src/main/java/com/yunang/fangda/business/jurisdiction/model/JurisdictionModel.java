@@ -12,7 +12,10 @@ import org.hibernate.annotations.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: LD
@@ -44,4 +47,7 @@ public class JurisdictionModel implements Serializable {
     @ApiModelProperty(value = "权限类型", example = "0：菜单 1：按钮")
     @Column(name = "jur_type", length = 32)
     private Integer jurType;
+
+    @Transient
+    private List<JurisdictionModel> list = new ArrayList<>();
 }

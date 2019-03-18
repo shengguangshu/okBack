@@ -43,7 +43,7 @@ public class LoginController {
         ResponseResult<AccountModel> responseResult = accountService.findByAccount(model.getAccount());
         if (responseResult.isSuccess()) {
             if (responseResult.getData().getPassword().equals(md5Password)) {
-                String token = JWTUtils.creaToken(responseResult.getData().getAccount(), responseResult.getData().getUuid(), "token");
+                String token = JWTUtils.creaToken(responseResult.getData().getAccount(), responseResult.getData().getUuid(), responseResult.getData().getPosId());
                 return new ResponseResult<>(true, "成功", token);
             }
         }
