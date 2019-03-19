@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,9 +54,9 @@ public class PositionServiceImpl implements PositionService {
         if (model.getPosName() != null && !model.getPosName().isEmpty()) {
             one.setPosName(model.getPosName());
         }
-        if (model.getPosParent() != null && !model.getPosParent().isEmpty()) {
-            one.setPosParent(model.getPosParent());
-        }
+//        if (model.getPosParent() != null && !model.getPosParent().isEmpty()) {
+//            one.setPosParent(model.getPosParent());
+//        }
         jpa.flush();
         return new ResponseResult<>(true, "成功");
     }
@@ -72,48 +71,48 @@ public class PositionServiceImpl implements PositionService {
     public ResponseResult<List<PositionModel>> findAll() {
         List<PositionModel> all = jpa.findAll();
         if (!all.isEmpty()) {
-            List<PositionModel> list = dg(all, null);
-            if (list.size() > 0) {
-                return new ResponseResult<>(true, "成功", list);
-            } else {
-                return new ResponseResult<>(false, "未查询到记录");
-            }
+//            List<PositionModel> list = dg(all, null);
+//            if (list.size() > 0) {
+            return new ResponseResult<>(true, "成功", all);
+//            } else {
+//                return new ResponseResult<>(false, "未查询到记录");
+//            }
         }
         return new ResponseResult<>(false, "未查询到记录");
     }
 
-    private static List<PositionModel> dg(List<PositionModel> list, String parent) {
-        parent = parent == null ? "0" : parent;
-        List<PositionModel> all = new ArrayList<>();
-        final String s = parent;
-        list.forEach(k -> {
-            if (k.getPosParent().equals(s)) {
-                all.add(findChildren(k, list));
-            }
-        });
-        return all;
-    }
+//    private static List<PositionModel> dg(List<PositionModel> list, String parent) {
+//        parent = parent == null ? "0" : parent;
+//        List<PositionModel> all = new ArrayList<>();
+//        final String s = parent;
+//        list.forEach(k -> {
+//            if (k.getPosParent().equals(s)) {
+//                all.add(findChildren(k, list));
+//            }
+//        });
+//        return all;
+//    }
 
-    private static PositionModel findChildren(PositionModel treeNode, List<PositionModel> treeNodes) {
-        for (PositionModel it : treeNodes) {
-            if (treeNode.getUuid().equals(it.getPosParent())) {
-                treeNode.getModelList().add(findChildren(it, treeNodes));
-            }
-        }
-        return treeNode;
-    }
+//    private static PositionModel findChildren(PositionModel treeNode, List<PositionModel> treeNodes) {
+//        for (PositionModel it : treeNodes) {
+//            if (treeNode.getUuid().equals(it.getPosParent())) {
+//                treeNode.getModelList().add(findChildren(it, treeNodes));
+//            }
+//        }
+//        return treeNode;
+//    }
 
     @Override
     public ResponseResult<List<PositionModel>> findByPosParent(String posParent) {
-        List<PositionModel> list = jpa.findByPosParent(posParent);
-        if (list.size() > 0) {
-            List<PositionModel> dg = dg(list, posParent);
-            if (dg.size() > 0) {
-                return new ResponseResult<>(true, "成功", dg);
-            } else {
-                return new ResponseResult<>(false, "未查询到记录");
-            }
-        }
+//        List<PositionModel> list = jpa.findByPosParent(posParent);
+//        if (list.size() > 0) {
+////            List<PositionModel> dg = dg(list, posParent);
+////            if (dg.size() > 0) {
+//            return new ResponseResult<>(true, "成功", list);
+////            } else {
+////                return new ResponseResult<>(false, "未查询到记录");
+////            }
+//        }
         return new ResponseResult<>(false, "未查询到记录");
     }
 }

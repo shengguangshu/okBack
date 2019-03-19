@@ -30,7 +30,7 @@ public class PositionController {
     private PositionService service;
 
     @ApiOperation(value = "查询所有")
-    @RequiresPermissions(value = "position-all")
+//    @RequiresPermissions(value = "position-all")
     @RequestMapping(value = "/position/all", method = RequestMethod.GET)
     public ResponseResult<List<PositionModel>> findAll() {
         return service.findAll();

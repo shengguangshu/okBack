@@ -40,11 +40,6 @@ public class DepartmentModel implements Serializable {
     @Column(name = "dep_name", length = 32)
     private String depName;
 
-    @ApiModelProperty(value = "职位", dataType = "com.yunang.fangda.business.position.model.PositionModel")
-    @OneToMany(targetEntity = PositionModel.class, cascade = {CascadeType.REMOVE})
-    @JoinColumn(name = "pos_id", referencedColumnName = "uuid")
-    private List<PositionModel> positionModels;
-
     @Version
     private Long version;
 

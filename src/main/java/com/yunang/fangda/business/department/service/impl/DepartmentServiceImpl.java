@@ -45,9 +45,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public ResponseResult<DepartmentModel> delete(String uuid) {
         Optional<DepartmentModel> optional = jpa.findById(uuid);
         if (optional.isPresent()) {
-            if (optional.get().getPositionModels().size() > 0) {
-                return new ResponseResult<>(false, "请先删除下级职位");
-            }
+//            if (optional.get().getPositionModels().size() > 0) {
+//                return new ResponseResult<>(false, "请先删除下级职位");
+//            }
             jpa.deleteById(uuid);
             return new ResponseResult<>(true, "成功");
         }

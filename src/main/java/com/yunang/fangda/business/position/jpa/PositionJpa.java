@@ -15,6 +15,6 @@ import java.util.List;
 public interface PositionJpa extends JpaSpecificationExecutor<PositionModel>,
         JpaRepository<PositionModel, String> {
 
-    List<PositionModel> findByPosParent(String posParent);
+//    List<PositionModel> findByPosParent(String posParent);
 
 }

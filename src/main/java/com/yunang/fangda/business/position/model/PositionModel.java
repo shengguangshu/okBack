@@ -1,6 +1,7 @@
 package com.yunang.fangda.business.position.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yunang.fangda.business.department.model.DepartmentModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -41,9 +42,14 @@ public class PositionModel implements Serializable {
     @Column(name = "pos_name", length = 32)
     private String posName;
 
-    @ApiModelProperty(value = "职位父级", example = "最大32位字符串")
-    @Column(name = "pos_parent", length = 32)
-    private String posParent;
+//    @ApiModelProperty(value = "职位父级", example = "最大32位字符串")
+//    @Column(name = "pos_parent", length = 32)
+//    private String posParent;
+
+    @ApiModelProperty(value = "部门", dataType = "com.yunang.fangda.business.department.model.DepartmentModel")
+    @ManyToOne(targetEntity = DepartmentModel.class, cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JoinColumn(name = "department_id", referencedColumnName = "uuid")
+    private DepartmentModel departmentModel;
 
     @Transient
     private List<PositionModel> modelList = new ArrayList<>();
