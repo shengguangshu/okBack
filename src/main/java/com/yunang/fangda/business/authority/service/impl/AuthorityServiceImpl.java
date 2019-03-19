@@ -55,6 +55,23 @@ public class AuthorityServiceImpl implements AuthorityService {
         }
     }
 
+    @Override
+    public ResponseResult<List<JurisdictionModel>> findByAutPosId2(String autPosId) {
+        List<Object[]> list = jpa.findJurisdictionModelByAutPostId(autPosId);
+        if (list.size() > 0) {
+            List<JurisdictionModel> list1 = new ArrayList<>();
+            list.forEach(k -> {
+                if (k[0] != null) {
+                    JurisdictionModel model = new JurisdictionModel((String) k[0], (String) k[1], (String) k[2], (String) k[3], (Integer) k[4], new ArrayList<>());
+                    list1.add(model);
+                }
+            });
+            return new ResponseResult<>(true, "成功", list1);
+        } else {
+            return new ResponseResult<>(false, "未查询到记录");
+        }
+    }
+
     private static List<JurisdictionModel> dg(List<JurisdictionModel> list) {
         List<JurisdictionModel> all = new ArrayList<>();
         list.forEach(k -> {

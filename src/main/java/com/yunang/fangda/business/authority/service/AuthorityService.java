@@ -28,4 +28,5 @@ public interface AuthorityService {
      * @return
      */
     ResponseResult<List<JurisdictionModel>> findByAutPosId(String autPosId);
+    ResponseResult<List<JurisdictionModel>> findByAutPosId2(String autPosId);
 }

@@ -19,11 +19,12 @@ public class JurisdictionUtils {
         list.add(new JurisdictionModel("3", "部门管理", "bmgl", "1", 0, null));
         list.add(new JurisdictionModel("4", "职位管理", "zwgl", "1", 0, null));
         list.add(new JurisdictionModel("5", "初始化权限", "cshqx", "1", 0, null));
-//        list.add(new JurisdictionModel("1", "账号管理", "account-zhgl", "0", 0));
-//        list.add(new JurisdictionModel("2", "新增账号", "account-save", "1", 1));
-//        list.add(new JurisdictionModel("3", "删除账号", "account-delete", "1", 1));
-//        list.add(new JurisdictionModel("4", "修改账号", "account-update", "1", 1));
-//        list.add(new JurisdictionModel("5", "分页查询账号", "account-page", "1", 1));
+        list.add(new JurisdictionModel("6", "员工管理", "0", "0", 0, null));
+        list.add(new JurisdictionModel("7", "员工管理", "yggl", "6", 0, null));
+        list.add(new JurisdictionModel("8", "员工新增", "ygadd", "7", 1, null));
+        list.add(new JurisdictionModel("9", "员工修改", "ygupdate", "7", 1, null));
+        list.add(new JurisdictionModel("10", "员工删除", "ygdelete", "7", 1, null));
+        list.add(new JurisdictionModel("11", "员工分页", "account-page", "7", 1, null));
         return list;
     }
 }
