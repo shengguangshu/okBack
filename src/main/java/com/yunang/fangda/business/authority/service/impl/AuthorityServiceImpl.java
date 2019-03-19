@@ -43,7 +43,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         if (list.size() > 0) {
             List<JurisdictionModel> list1 = new ArrayList<>();
             list.forEach(k -> {
-                if (k != null) {
+                if (k[0] != null) {
                     JurisdictionModel model = new JurisdictionModel((String) k[0], (String) k[1], (String) k[2], (String) k[3], (Integer) k[4], new ArrayList<>());
                     list1.add(model);
                 }
