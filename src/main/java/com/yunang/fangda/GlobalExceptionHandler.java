@@ -57,6 +57,11 @@ public class GlobalExceptionHandler {
         return new ResponseResult<>(false, "数据不存在");
     }
 
+    @ExceptionHandler(value = java.lang.NullPointerException.class)
+    public ResponseResult<String> nullPointerException(Exception exception) {
+        return new ResponseResult<>(false, "空指针错误");
+    }
+
     /**
      * 此方法必须在最后
      *
