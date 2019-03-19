@@ -2,8 +2,7 @@ package com.yunang.fangda.business.department.service;
 
 import com.yunang.fangda.business.department.model.DepartmentModel;
 import com.yunang.fangda.utils.ResponseResult;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 /**
  * @author: LD
@@ -19,5 +18,5 @@ public interface DepartmentService {
 
     ResponseResult<DepartmentModel> getOne(String uuid);
 
-    ResponseResult<List<DepartmentModel>> findAll();
+    ResponseResult<Page<DepartmentModel>> findAll(int pageNow, int pageSize, DepartmentModel model);
 }

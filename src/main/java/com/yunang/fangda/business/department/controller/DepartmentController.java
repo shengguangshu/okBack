@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author ld
@@ -26,14 +26,18 @@ import java.util.List;
 @RequestMapping("/department")
 public class DepartmentController {
 
+    @Value("${page.pageSize}")
+    private int pageSize;
+
     @Autowired
     private DepartmentService service;
 
     @ApiOperation(value = "查询所有部门")
-//    @RequiresPermissions(value = "department-all")
-    @RequestMapping(value = "/department/all", method = RequestMethod.GET)
-    public ResponseResult<List<DepartmentModel>> findAll() {
-        return service.findAll();
+    @RequiresPermissions(value = {"department-page"},logical = Logical.OR)
+    @RequestMapping(value = "/page/{pageNow}", method = RequestMethod.POST)
+    public ResponseResult<Page<DepartmentModel>> findAll(@PathVariable("pageNow") int pageNow,
+                                                         @RequestBody DepartmentModel model) {
+        return service.findAll(pageNow, pageSize, model);
     }
 
     @ApiOperation(value = "部门新增")

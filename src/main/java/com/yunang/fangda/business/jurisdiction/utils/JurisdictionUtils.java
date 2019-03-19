@@ -17,6 +17,13 @@ public class JurisdictionUtils {
         list.add(new JurisdictionModel("1", "系统管理", "0", "0", 0, null));
         list.add(new JurisdictionModel("2", "权限管理", "qxgl", "1", 0, null));
         list.add(new JurisdictionModel("3", "部门管理", "bmgl", "1", 0, null));
+        list.add(new JurisdictionModel("31", "部门管理", "department-page", "3", 1, null));
+        list.add(new JurisdictionModel("32", "部门新增", "department-save", "3", 1, null));
+        list.add(new JurisdictionModel("33", "部门修改", "department-update", "3", 1, null));
+        list.add(new JurisdictionModel("34", "部门删除", "department-delete", "3", 1, null));
+        list.add(new JurisdictionModel("35", "部门查询单个", "department-one", "3", 1, null));
+
+
         list.add(new JurisdictionModel("4", "职位管理", "zwgl", "1", 0, null));
         list.add(new JurisdictionModel("5", "初始化权限", "cshqx", "1", 0, null));
         list.add(new JurisdictionModel("6", "员工管理", "0", "0", 0, null));

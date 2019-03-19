@@ -1,6 +1,7 @@
 package com.yunang.fangda.business.department.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yunang.fangda.business.position.model.PositionModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -9,11 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Table;
-import org.springframework.data.annotation.Version;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,12 +40,10 @@ public class DepartmentModel implements Serializable {
     @Column(name = "dep_name", length = 32)
     private String depName;
 
-    @ApiModelProperty(value = "部门父级", example = "最大32位字符串")
-    @Column(name = "dep_parent", length = 32)
-    private String depParent;
-
-    @Transient
-    private List<DepartmentModel> modelList = new ArrayList<>();
+    @ApiModelProperty(value = "职位", dataType = "com.yunang.fangda.business.position.model.PositionModel")
+    @OneToMany(targetEntity = PositionModel.class, cascade = {CascadeType.REMOVE})
+    @JoinColumn(name = "pos_id", referencedColumnName = "uuid")
+    private List<PositionModel> positionModels;
 
     @Version
     private Long version;
