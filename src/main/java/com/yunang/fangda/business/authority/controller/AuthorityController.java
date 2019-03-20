@@ -42,7 +42,7 @@ public class AuthorityController {
     }
 
     @ApiOperation(value = "根据职位id查询权限")
-    @RequiresPermissions(value = "authority-findByAutPosId")
+//    @RequiresPermissions(value = "authority-findByAutPosId")
     @RequestMapping(value = "/authority/{autPostId}", method = RequestMethod.GET)
     public ResponseResult<List<JurisdictionModel>> findByAutPosId(@PathVariable("autPostId") String autPostId) {
         return service.findByAutPosId(autPostId);

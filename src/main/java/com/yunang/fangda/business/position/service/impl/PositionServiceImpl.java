@@ -19,9 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author: LD
@@ -104,6 +102,16 @@ public class PositionServiceImpl implements PositionService {
             return new ResponseResult<>(false, "未查询到数据", null);
     }
 
+    @Override
+    public ResponseResult<List<PositionModel>> findAll2() {
+        List<PositionModel> list = jpa.findAll();
+        if (list.size() > 0) {
+            return new ResponseResult<>(true, "成功", list);
+        } else {
+            return new ResponseResult<>(false, "未查询到数据", null);
+        }
+    }
+
     //    查询条件
     private Specification<PositionModel> queryTj(PositionModel model) {
         return new Specification<PositionModel>() {//查询条件构造
@@ -124,6 +132,13 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public ResponseResult<List<PositionModel>> findByPosParent(String posParent) {
+        List<PositionModel> list = jpa.findAll();
+        List<PositionModel> list2 = new ArrayList<>();
+        if (list.size() > 0){
+            list.forEach(k->{
+
+            });
+        }
 //        List<PositionModel> list = jpa.findByPosParent(posParent);
 //        if (list.size() > 0) {
 ////            List<PositionModel> dg = dg(list, posParent);

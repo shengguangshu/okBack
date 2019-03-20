@@ -35,7 +35,7 @@ public class DepartmentController {
     private DepartmentService service;
 
     @ApiOperation(value = "查询所有部门")
-    @RequiresPermissions(value = {"department-page"}, logical = Logical.OR)
+//    @RequiresPermissions(value = {"department-page"}, logical = Logical.OR)
     @RequestMapping(value = "/page/{pageNow}", method = RequestMethod.POST)
     public ResponseResult<Page<DepartmentModel>> findAll(@PathVariable("pageNow") int pageNow,
                                                          @RequestBody DepartmentModel model) {
@@ -50,7 +50,7 @@ public class DepartmentController {
     }
 
     @ApiOperation(value = "部门新增")
-    @RequiresPermissions(value = "department-save")
+//    @RequiresPermissions(value = "department-save")
     @RequestMapping(value = "/department", method = RequestMethod.POST)
     public ResponseResult<DepartmentModel> save(@ApiParam(value = "部门实体", required = true, example = "根据业务填写必填项")
                                                 @RequestBody DepartmentModel model) {
@@ -64,7 +64,7 @@ public class DepartmentController {
      * @return
      */
     @ApiOperation(value = "根据账号主键删除")
-    @RequiresPermissions(value = "department-delete")
+//    @RequiresPermissions(value = "department-delete")
     @RequestMapping(value = "/department/{uuid}", method = RequestMethod.DELETE)
     public ResponseResult<DepartmentModel> delete(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                                   @PathVariable("uuid") String uuid) {
@@ -72,7 +72,7 @@ public class DepartmentController {
     }
 
     @ApiOperation(value = "根据账号主键修改")
-    @RequiresPermissions(value = {"department-one", "department-update"}, logical = Logical.OR)
+//    @RequiresPermissions(value = {"department-one", "department-update"}, logical = Logical.OR)
     @RequestMapping(value = "/department/{uuid}", method = RequestMethod.GET)
     public ResponseResult<DepartmentModel> getOne(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                                   @PathVariable("uuid") String uuid) {
@@ -80,7 +80,7 @@ public class DepartmentController {
     }
 
     @ApiOperation(value = "根据账号主键修改")
-    @RequiresPermissions(value = "department-update")
+//    @RequiresPermissions(value = "department-update")
     @RequestMapping(value = "/department/{uuid}", method = RequestMethod.PUT)
     public ResponseResult<DepartmentModel> update(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                                   @PathVariable("uuid") String uuid,

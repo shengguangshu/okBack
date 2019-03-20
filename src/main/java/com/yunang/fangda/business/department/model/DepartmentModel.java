@@ -13,6 +13,7 @@ import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +40,9 @@ public class DepartmentModel implements Serializable {
     @ApiModelProperty(value = "部门名称", example = "最大32位字符串")
     @Column(name = "dep_name", length = 32)
     private String depName;
+
+    @Transient
+    private List<PositionModel> list = new ArrayList<>();
 
     @Version
     private Long version;

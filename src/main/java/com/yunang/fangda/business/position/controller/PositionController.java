@@ -1,5 +1,6 @@
 package com.yunang.fangda.business.position.controller;
 
+import com.yunang.fangda.business.department.model.DepartmentModel;
 import com.yunang.fangda.business.position.model.PositionModel;
 import com.yunang.fangda.business.position.service.PositionService;
 import com.yunang.fangda.utils.ResponseResult;
@@ -7,8 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -40,6 +39,13 @@ public class PositionController {
     public ResponseResult<Page<PositionModel>> findAll(@PathVariable("pageNow") int pageNow,
                                                        @RequestBody PositionModel model) {
         return service.findAll(pageNow, pageSize, model);
+    }
+
+    @ApiOperation(value = "查询所有")
+//    @RequiresPermissions(value = "position-all")
+    @RequestMapping(value = "/find/all", method = RequestMethod.GET)
+    public ResponseResult<List<PositionModel>> findAll2() {
+        return service.findAll2();
     }
 
     @ApiOperation(value = "根据部门id查询")

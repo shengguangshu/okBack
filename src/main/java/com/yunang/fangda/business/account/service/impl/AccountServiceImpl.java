@@ -15,11 +15,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,9 @@ public class AccountServiceImpl implements AccountService {
             model.setPositionModel(optional2.get());
             model.setIsLogin(1);
             model.setSystemTimes(new Timestamp(System.currentTimeMillis()));
+//            密码加密
+            String md5Password = DigestUtils.md5DigestAsHex(model.getPassword().getBytes(StandardCharsets.UTF_8));
+            model.setPassword(md5Password);
             jpa.save(model);
             return new ResponseResult<>(true, "成功", null);
         }

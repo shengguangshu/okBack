@@ -47,7 +47,7 @@ public class AccountController {
      * @return
      */
     @ApiOperation(value = "账号分页查询")
-    @RequiresPermissions(value = "account-page")
+//    @RequiresPermissions(value = "account-page")
     @RequestMapping(value = "/page/{pageNow}", method = RequestMethod.POST)
     public ResponseResult<Page<AccountModel>> page(@ApiParam(value = "当前页数", required = true, example = "1为第一页")
                                                    @PathVariable("pageNow") int pageNow,
@@ -57,7 +57,7 @@ public class AccountController {
     }
 
     @ApiOperation(value = "账号新增")
-    @RequiresPermissions(value = "account-save")
+//    @RequiresPermissions(value = "account-save")
     @RequestMapping(value = "/account", method = RequestMethod.POST)
     public ResponseResult<AccountModel> save(@ApiParam(value = "账号实体", required = true, example = "根据业务填写必填项")
                                              @RequestBody AccountModel model) {
@@ -72,7 +72,7 @@ public class AccountController {
      */
     @ApiOperation(value = "根据账号主键删除")
 //    @RequiresRoles(value = {"admin"})
-    @RequiresPermissions(value = "account-delete")
+//    @RequiresPermissions(value = "account-delete")
     @RequestMapping(value = "/account/{uuid}", method = RequestMethod.DELETE)
     public ResponseResult<AccountModel> delete(@ApiParam(value = "账号主键", required = true, example = "后台获取的主键")
                                                @PathVariable("uuid") String uuid) {
