@@ -154,6 +154,12 @@ public class AccountServiceImpl implements AccountService {
                         Predicate p1 = cb.like(root.get("account").as(String.class), "%" + model.getAccount() + "%");
                         predicates.add(cb.and(p1));
                     }
+                    if (model.getUser() != null){
+                        if (model.getUser().getName() != null && !model.getUser().getName().isEmpty()){
+                            Predicate p1 = cb.like(root.get("user").get("name").as(String.class), "%" + model.getUser().getName() + "%");
+                            predicates.add(cb.and(p1));
+                        }
+                    }
                 }
 //                if (model.getDrnyStar() != null && !model.getDrnyStar().trim().equals("")) {
 ////                    时间   小于等于 导入日期 大于等于 导入日期
