@@ -3,6 +3,10 @@ package com.yunang.fangda.business.account.service.impl;
 import com.yunang.fangda.business.account.jpa.AccountJpa;
 import com.yunang.fangda.business.account.model.AccountModel;
 import com.yunang.fangda.business.account.service.AccountService;
+import com.yunang.fangda.business.department.jpa.DepartmentJpa;
+import com.yunang.fangda.business.department.model.DepartmentModel;
+import com.yunang.fangda.business.position.jpa.PositionJpa;
+import com.yunang.fangda.business.position.model.PositionModel;
 import com.yunang.fangda.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,7 @@ import javax.persistence.criteria.Root;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author ld
@@ -31,16 +36,34 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountJpa jpa;
+    @Autowired
+    private DepartmentJpa departmentJpa;
+    @Autowired
+    private PositionJpa positionJpa;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<AccountModel> save(AccountModel model) {
-        if (model == null)
-            return new ResponseResult<>(false, "数据为空", null);
         List<AccountModel> list = jpa.findByAccount(model.getAccount());
-        if (list.size() > 0)
+        if (list.size() > 0) {
             return new ResponseResult<>(false, "该账户已存在", null);
-        else {
+        } else {
+            if (model.getDepartmentModel() == null || model.getDepartmentModel().getUuid() == null) {
+                return new ResponseResult<>(false, "缺失部门");
+            }
+            Optional<DepartmentModel> optional = departmentJpa.findById(model.getDepartmentModel().getUuid());
+            if (!optional.isPresent()) {
+                return new ResponseResult<>(false, "部门已不存在");
+            }
+            model.setDepartmentModel(optional.get());
+            if (model.getPositionModel() == null || model.getPositionModel().getUuid() == null) {
+                return new ResponseResult<>(false, "缺失职位");
+            }
+            Optional<PositionModel> optional2 = positionJpa.findById(model.getPositionModel().getUuid());
+            if (!optional2.isPresent()) {
+                return new ResponseResult<>(false, "职位已不存在");
+            }
+            model.setPositionModel(optional2.get());
             model.setIsLogin(1);
             model.setSystemTimes(new Timestamp(System.currentTimeMillis()));
             jpa.save(model);
@@ -60,7 +83,30 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<AccountModel> update(AccountModel model) {
-        return new ResponseResult<>(false, "主键不能为空", null);
+        AccountModel one = jpa.getOne(model.getUuid());
+        if (one == null || one.getUuid() == null) {
+            return new ResponseResult<>(false, "该账号已不存在");
+        }
+        if (model.getDepartmentModel() != null && model.getDepartmentModel().getUuid() != null) {
+            Optional<DepartmentModel> optional = departmentJpa.findById(model.getDepartmentModel().getUuid());
+            if (!optional.isPresent()) {
+                return new ResponseResult<>(false, "部门已不存在");
+            }
+            one.setDepartmentModel(optional.get());
+        }
+
+        if (model.getPositionModel() != null && model.getPositionModel().getUuid() != null) {
+            Optional<PositionModel> optional2 = positionJpa.findById(model.getPositionModel().getUuid());
+            if (!optional2.isPresent()) {
+                return new ResponseResult<>(false, "职位已不存在");
+            }
+            one.setPositionModel(optional2.get());
+        }
+        if (model.getIsLogin() > 0) {
+            one.setIsLogin(model.getIsLogin());
+        }
+        jpa.flush();
+        return new ResponseResult<>(true, "成功", null);
     }
 
     @Override

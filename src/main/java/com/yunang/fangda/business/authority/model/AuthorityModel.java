@@ -9,12 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Table;
-import org.springframework.data.annotation.Version;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -38,12 +34,12 @@ public class AuthorityModel implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     private String uuid;
 
-    @ApiModelProperty(value = "职位主键", example = "最大32位字符串")
-    @Column(name = "aut_pos_id", length = 32)
+    @ApiModelProperty(value = "职位主键", example = "最大50位字符串")
+    @Column(name = "aut_pos_id", length = 50)
     private String autPostId;
 
-    @ApiModelProperty(value = "权限主键", example = "最大32位字符串")
-    @Column(name = "aut_jur_id", length = 32)
+    @ApiModelProperty(value = "权限主键", example = "最大50位字符串")
+    @Column(name = "aut_jur_id", length = 50)
     private String autJurId;
 
     @Version

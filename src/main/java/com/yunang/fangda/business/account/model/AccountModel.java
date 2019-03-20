@@ -2,6 +2,8 @@ package com.yunang.fangda.business.account.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yunang.fangda.business.department.model.DepartmentModel;
+import com.yunang.fangda.business.position.model.PositionModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -52,12 +54,14 @@ public class AccountModel implements Serializable {
     @OneToOne(targetEntity = UserModel.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "uuid")
     private UserModel user;
-    @ApiModelProperty(value = "部门", example = "选择部门")
-    @Column(name = "dep_id", length = 32)
-    private String depId;
-    @ApiModelProperty(value = "职位", example = "选择职位")
-    @Column(name = "pos_id", length = 32)
-    private String posId;
+    @ApiModelProperty(value = "部门", dataType = "com.yunang.fangda.business.department.model.DepartmentModel")
+    @ManyToOne(targetEntity = DepartmentModel.class, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "department_id", referencedColumnName = "uuid")
+    private DepartmentModel departmentModel;
+    @ApiModelProperty(value = "职位", dataType = "com.yunang.fangda.business.position.model.PositionModel")
+    @ManyToOne(targetEntity = PositionModel.class, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "position_id", referencedColumnName = "uuid")
+    private PositionModel positionModel;
 
 
     @ApiModelProperty(value = "数据版本信息", example = "修改删除时必填，从后台获取")

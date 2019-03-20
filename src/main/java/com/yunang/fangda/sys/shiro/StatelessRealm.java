@@ -17,7 +17,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class StatelessRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         AccountModel token = (AccountModel) arg0.getPrimaryPrincipal();
-        ResponseResult<List<JurisdictionModel>> result = authorityService.findByAutPosId2(token.getPosId());
+        ResponseResult<List<JurisdictionModel>> result = authorityService.findByAutPosId2(token.getPositionModel().getUuid());
         if (result.isSuccess()) {
             result.getData().forEach(k -> {
                 info.addStringPermission(k.getJurFlag());
