@@ -1,14 +1,25 @@
 package com.yunang.fangda.business.position.service.impl;
 
+import com.yunang.fangda.business.department.jpa.DepartmentJpa;
+import com.yunang.fangda.business.department.model.DepartmentModel;
 import com.yunang.fangda.business.position.jpa.PositionJpa;
 import com.yunang.fangda.business.position.model.PositionModel;
 import com.yunang.fangda.business.position.service.PositionService;
 import com.yunang.fangda.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +34,20 @@ public class PositionServiceImpl implements PositionService {
 
     @Autowired
     private PositionJpa jpa;
+    @Autowired
+    private DepartmentJpa departmentJpa;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<PositionModel> save(PositionModel model) {
-        jpa.save(model);
-        return new ResponseResult<>(true, "成功");
+        Optional<DepartmentModel> optional = departmentJpa.findById(model.getDepartmentModel().getUuid());
+        if (optional.isPresent()) {
+            model.setDepartmentModel(optional.get());
+            jpa.save(model);
+            return new ResponseResult<>(true, "成功");
+        } else {
+            return new ResponseResult<>(false, "部门已不存在");
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -54,9 +73,14 @@ public class PositionServiceImpl implements PositionService {
         if (model.getPosName() != null && !model.getPosName().isEmpty()) {
             one.setPosName(model.getPosName());
         }
-//        if (model.getPosParent() != null && !model.getPosParent().isEmpty()) {
-//            one.setPosParent(model.getPosParent());
-//        }
+        if (model.getDepartmentModel() != null && model.getDepartmentModel().getUuid() != null) {
+            Optional<DepartmentModel> optional = departmentJpa.findById(model.getDepartmentModel().getUuid());
+            if (optional.isPresent()) {
+                one.setDepartmentModel(optional.get());
+            } else {
+                return new ResponseResult<>(false, "部门已不存在");
+            }
+        }
         jpa.flush();
         return new ResponseResult<>(true, "成功");
     }
@@ -68,39 +92,35 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
-    public ResponseResult<List<PositionModel>> findAll() {
-        List<PositionModel> all = jpa.findAll();
-        if (!all.isEmpty()) {
-//            List<PositionModel> list = dg(all, null);
-//            if (list.size() > 0) {
-            return new ResponseResult<>(true, "成功", all);
-//            } else {
-//                return new ResponseResult<>(false, "未查询到记录");
-//            }
-        }
-        return new ResponseResult<>(false, "未查询到记录");
+    public ResponseResult<Page<PositionModel>> findAll(int pageNow, int pageSize, PositionModel model) {
+        List<Sort.Order> orders = new ArrayList<>();
+        orders.add(new Sort.Order(Sort.Direction.ASC, "posName"));
+        Specification<PositionModel> spec = queryTj(model);
+        PageRequest pageRequest = PageRequest.of(pageNow - 1, pageSize, Sort.by(orders));
+        Page<PositionModel> page = jpa.findAll(spec, pageRequest);
+        if (!page.getContent().isEmpty())
+            return new ResponseResult<>(true, "成功", page);
+        else
+            return new ResponseResult<>(false, "未查询到数据", null);
     }
 
-//    private static List<PositionModel> dg(List<PositionModel> list, String parent) {
-//        parent = parent == null ? "0" : parent;
-//        List<PositionModel> all = new ArrayList<>();
-//        final String s = parent;
-//        list.forEach(k -> {
-//            if (k.getPosParent().equals(s)) {
-//                all.add(findChildren(k, list));
-//            }
-//        });
-//        return all;
-//    }
-
-//    private static PositionModel findChildren(PositionModel treeNode, List<PositionModel> treeNodes) {
-//        for (PositionModel it : treeNodes) {
-//            if (treeNode.getUuid().equals(it.getPosParent())) {
-//                treeNode.getModelList().add(findChildren(it, treeNodes));
-//            }
-//        }
-//        return treeNode;
-//    }
+    //    查询条件
+    private Specification<PositionModel> queryTj(PositionModel model) {
+        return new Specification<PositionModel>() {//查询条件构造
+            @Override
+            public Predicate toPredicate(Root<PositionModel> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (model != null) {
+                    if (model.getPosName() != null && !model.getPosName().isEmpty()) {
+                        Predicate p1 = cb.like(root.get("posName").as(String.class), "%" + model.getPosName() + "%");
+                        predicates.add(cb.and(p1));
+                    }
+                }
+                int size = predicates.size();
+                return cb.and(predicates.toArray(new Predicate[size]));
+            }
+        };
+    }
 
     @Override
     public ResponseResult<List<PositionModel>> findByPosParent(String posParent) {

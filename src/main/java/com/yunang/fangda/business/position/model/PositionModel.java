@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Table;
-import org.springframework.data.annotation.Version;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -47,7 +46,7 @@ public class PositionModel implements Serializable {
 //    private String posParent;
 
     @ApiModelProperty(value = "部门", dataType = "com.yunang.fangda.business.department.model.DepartmentModel")
-    @ManyToOne(targetEntity = DepartmentModel.class, cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @ManyToOne(targetEntity = DepartmentModel.class, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "department_id", referencedColumnName = "uuid")
     private DepartmentModel departmentModel;
 

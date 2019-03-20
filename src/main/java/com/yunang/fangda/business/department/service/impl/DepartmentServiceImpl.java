@@ -93,6 +93,15 @@ public class DepartmentServiceImpl implements DepartmentService {
             return new ResponseResult<>(false, "未查询到数据", null);
     }
 
+    @Override
+    public ResponseResult<List<DepartmentModel>> findAll2() {
+        List<DepartmentModel> list = jpa.findAll();
+        if (list.size() > 0)
+            return new ResponseResult<>(true, "成功", list);
+        else
+            return new ResponseResult<>(false, "未查询到数据", null);
+    }
+
     //    查询条件
     private Specification<DepartmentModel> queryTj(DepartmentModel model) {
         return new Specification<DepartmentModel>() {//查询条件构造

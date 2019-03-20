@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,14 +28,18 @@ import java.util.List;
 @RequestMapping("/position")
 public class PositionController {
 
+    @Value("${page.pageSize}")
+    private int pageSize;
+
     @Autowired
     private PositionService service;
 
-    @ApiOperation(value = "查询所有")
+    @ApiOperation(value = "查询所有分页")
 //    @RequiresPermissions(value = "position-all")
-    @RequestMapping(value = "/position/all", method = RequestMethod.GET)
-    public ResponseResult<List<PositionModel>> findAll() {
-        return service.findAll();
+    @RequestMapping(value = "/page/{pageNow}", method = RequestMethod.POST)
+    public ResponseResult<Page<PositionModel>> findAll(@PathVariable("pageNow") int pageNow,
+                                                       @RequestBody PositionModel model) {
+        return service.findAll(pageNow, pageSize, model);
     }
 
     @ApiOperation(value = "根据部门id查询")
@@ -44,7 +50,7 @@ public class PositionController {
     }
 
     @ApiOperation(value = "新增")
-    @RequiresPermissions(value = "position-save")
+//    @RequiresPermissions(value = "position-save")
     @RequestMapping(value = "/position", method = RequestMethod.POST)
     public ResponseResult<PositionModel> save(@ApiParam(value = "实体", required = true, example = "根据业务填写必填项")
                                               @RequestBody PositionModel model) {
@@ -57,24 +63,24 @@ public class PositionController {
      * @param uuid
      * @return
      */
-    @ApiOperation(value = "根据账号主键删除")
-    @RequiresPermissions(value = "position-delete")
+    @ApiOperation(value = "根据主键删除")
+//    @RequiresPermissions(value = "position-delete")
     @RequestMapping(value = "/position/{uuid}", method = RequestMethod.DELETE)
     public ResponseResult<PositionModel> delete(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                                 @PathVariable("uuid") String uuid) {
         return service.delete(uuid);
     }
 
-    @ApiOperation(value = "根据账号主键修改")
-    @RequiresPermissions(value = {"position-one", "position-update"}, logical = Logical.OR)
+    @ApiOperation(value = "根据主键查询")
+//    @RequiresPermissions(value = {"position-one", "position-update"}, logical = Logical.OR)
     @RequestMapping(value = "/position/{uuid}", method = RequestMethod.GET)
     public ResponseResult<PositionModel> getOne(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                                 @PathVariable("uuid") String uuid) {
         return service.getOne(uuid);
     }
 
-    @ApiOperation(value = "根据账号主键修改")
-    @RequiresPermissions(value = "position-update")
+    @ApiOperation(value = "根据主键修改")
+//    @RequiresPermissions(value = "position-update")
     @RequestMapping(value = "/position/{uuid}", method = RequestMethod.PUT)
     public ResponseResult<PositionModel> update(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                                 @PathVariable("uuid") String uuid,

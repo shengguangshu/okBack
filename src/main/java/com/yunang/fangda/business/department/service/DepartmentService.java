@@ -4,6 +4,8 @@ import com.yunang.fangda.business.department.model.DepartmentModel;
 import com.yunang.fangda.utils.ResponseResult;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * @author: LD
  * @date:
@@ -19,4 +21,6 @@ public interface DepartmentService {
     ResponseResult<DepartmentModel> getOne(String uuid);
 
     ResponseResult<Page<DepartmentModel>> findAll(int pageNow, int pageSize, DepartmentModel model);
+
+    ResponseResult<List<DepartmentModel>> findAll2();
 }

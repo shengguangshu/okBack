@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author ld
  * @name
@@ -33,11 +35,18 @@ public class DepartmentController {
     private DepartmentService service;
 
     @ApiOperation(value = "查询所有部门")
-    @RequiresPermissions(value = {"department-page"},logical = Logical.OR)
+    @RequiresPermissions(value = {"department-page"}, logical = Logical.OR)
     @RequestMapping(value = "/page/{pageNow}", method = RequestMethod.POST)
     public ResponseResult<Page<DepartmentModel>> findAll(@PathVariable("pageNow") int pageNow,
                                                          @RequestBody DepartmentModel model) {
         return service.findAll(pageNow, pageSize, model);
+    }
+
+    @ApiOperation(value = "查询所有部门")
+//    @RequiresPermissions(value = {"department-page"},logical = Logical.OR)
+    @RequestMapping(value = "/find/all", method = RequestMethod.GET)
+    public ResponseResult<List<DepartmentModel>> find() {
+        return service.findAll2();
     }
 
     @ApiOperation(value = "部门新增")
