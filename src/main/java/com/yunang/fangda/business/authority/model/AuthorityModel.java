@@ -1,6 +1,8 @@
 package com.yunang.fangda.business.authority.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yunang.fangda.business.jurisdiction.model.JurisdictionModel;
+import com.yunang.fangda.business.position.model.PositionModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -34,13 +36,15 @@ public class AuthorityModel implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     private String uuid;
 
-    @ApiModelProperty(value = "职位主键", example = "最大50位字符串")
-    @Column(name = "aut_pos_id", length = 50)
-    private String autPostId;
+    @ApiModelProperty(value = "职位", dataType = "com.yunang.fangda.business.position.model.PositionModel")
+    @OneToOne(targetEntity = PositionModel.class, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "position_id", referencedColumnName = "uuid")
+    private PositionModel positionModel;
 
-    @ApiModelProperty(value = "权限主键", example = "最大50位字符串")
-    @Column(name = "aut_jur_id", length = 50)
-    private String autJurId;
+    @ApiModelProperty(value = "权限", dataType = "com.yunang.fangda.business.jurisdiction.model.JurisdictionModel")
+    @OneToOne(targetEntity = JurisdictionModel.class, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "jurisdiction_id", referencedColumnName = "uuid")
+    private JurisdictionModel jurisdictionModel;
 
     @Version
     private Long version;

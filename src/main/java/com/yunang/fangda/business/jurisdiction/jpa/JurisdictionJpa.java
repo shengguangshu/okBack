@@ -20,7 +20,7 @@ public interface JurisdictionJpa extends JpaSpecificationExecutor<JurisdictionMo
             " a.uuid as isy" +
             " FROM" +
             " authority_table a" +
-            " RIGHT JOIN jurisdiction_table j ON j.uuid = a.aut_jur_id" +
-            " AND a.aut_pos_id = '100000'", nativeQuery = true)
+            " RIGHT JOIN jurisdiction_table j ON j.uuid = a.jurisdiction_id" +
+            " AND a.position_id = ?1", nativeQuery = true)
     List<Object[]> findByPosId(String posId);
 }

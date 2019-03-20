@@ -1,6 +1,5 @@
 package com.yunang.fangda.business.position.controller;
 
-import com.yunang.fangda.business.department.model.DepartmentModel;
 import com.yunang.fangda.business.position.model.PositionModel;
 import com.yunang.fangda.business.position.service.PositionService;
 import com.yunang.fangda.utils.ResponseResult;

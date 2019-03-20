@@ -55,11 +55,11 @@ public class AccountModel implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "uuid")
     private UserModel user;
     @ApiModelProperty(value = "部门", dataType = "com.yunang.fangda.business.department.model.DepartmentModel")
-    @ManyToOne(targetEntity = DepartmentModel.class, cascade = {CascadeType.MERGE})
+    @OneToOne(targetEntity = DepartmentModel.class, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "department_id", referencedColumnName = "uuid")
     private DepartmentModel departmentModel;
     @ApiModelProperty(value = "职位", dataType = "com.yunang.fangda.business.position.model.PositionModel")
-    @ManyToOne(targetEntity = PositionModel.class, cascade = {CascadeType.MERGE})
+    @OneToOne(targetEntity = PositionModel.class, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "position_id", referencedColumnName = "uuid")
     private PositionModel positionModel;
 

@@ -19,7 +19,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author: LD
@@ -134,8 +136,8 @@ public class PositionServiceImpl implements PositionService {
     public ResponseResult<List<PositionModel>> findByPosParent(String posParent) {
         List<PositionModel> list = jpa.findAll();
         List<PositionModel> list2 = new ArrayList<>();
-        if (list.size() > 0){
-            list.forEach(k->{
+        if (list.size() > 0) {
+            list.forEach(k -> {
 
             });
         }

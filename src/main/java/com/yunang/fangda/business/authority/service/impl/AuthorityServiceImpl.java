@@ -3,7 +3,10 @@ package com.yunang.fangda.business.authority.service.impl;
 import com.yunang.fangda.business.authority.jpa.AuthorityJpa;
 import com.yunang.fangda.business.authority.model.AuthorityModel;
 import com.yunang.fangda.business.authority.service.AuthorityService;
+import com.yunang.fangda.business.jurisdiction.jpa.JurisdictionJpa;
 import com.yunang.fangda.business.jurisdiction.model.JurisdictionModel;
+import com.yunang.fangda.business.position.jpa.PositionJpa;
+import com.yunang.fangda.business.position.model.PositionModel;
 import com.yunang.fangda.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author: LD
@@ -24,14 +28,30 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Autowired
     private AuthorityJpa jpa;
+    @Autowired
+    private JurisdictionJpa jurisdictionJpa;
+    @Autowired
+    private PositionJpa positionJpa;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<AuthorityModel> setPostIdAndJurId(AuthorityModel model) {
-        AuthorityModel one = jpa.findByAutPostIdAndAutJurId(model.getAutPostId(), model.getAutJurId());
+        AuthorityModel one = jpa.findByPositionModelUuidAndJurisdictionModelUuid(model.getPositionModel().getUuid(), model.getJurisdictionModel().getUuid());
         if (one != null) {
             jpa.deleteById(one.getUuid());
         } else {
+            if (model.getJurisdictionModel() != null && model.getJurisdictionModel().getUuid() != null) {
+                Optional<JurisdictionModel> optional = jurisdictionJpa.findById(model.getJurisdictionModel().getUuid());
+                if (optional.isPresent()) {
+                    model.setJurisdictionModel(optional.get());
+                }
+            }
+            if (model.getPositionModel() != null && model.getPositionModel().getUuid() != null) {
+                Optional<PositionModel> optional = positionJpa.findById(model.getPositionModel().getUuid());
+                if (optional.isPresent()) {
+                    model.setPositionModel(optional.get());
+                }
+            }
             jpa.save(model);
         }
         return new ResponseResult<>(true, "成功");

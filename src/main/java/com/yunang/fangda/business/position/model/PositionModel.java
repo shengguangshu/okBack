@@ -46,7 +46,7 @@ public class PositionModel implements Serializable {
 //    private String posParent;
 
     @ApiModelProperty(value = "部门", dataType = "com.yunang.fangda.business.department.model.DepartmentModel")
-    @ManyToOne(targetEntity = DepartmentModel.class, cascade = {CascadeType.MERGE})
+    @OneToOne(targetEntity = DepartmentModel.class, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "department_id", referencedColumnName = "uuid")
     private DepartmentModel departmentModel;
 
