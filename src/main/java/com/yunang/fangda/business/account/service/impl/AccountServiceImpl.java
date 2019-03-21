@@ -107,8 +107,15 @@ public class AccountServiceImpl implements AccountService {
             }
             one.setPositionModel(optional2.get());
         }
-        if (model.getIsLogin() > 0) {
+        if (model.getIsLogin() != null && model.getIsLogin() > 0) {
             one.setIsLogin(model.getIsLogin());
+        }
+        if (model.getUser() != null && model.getUser().getName() != null) {
+            one.getUser().setName(model.getUser().getName());
+        }
+        if (model.getPassword() != null && !model.getPassword().isEmpty()) {
+            String md5Password = DigestUtils.md5DigestAsHex(model.getPassword().getBytes(StandardCharsets.UTF_8));
+            one.setPassword(md5Password);
         }
         jpa.flush();
         return new ResponseResult<>(true, "成功", null);
@@ -116,8 +123,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseResult<AccountModel> findById(String uuid) {
-        AccountModel one = jpa.getOne(uuid);
-        return new ResponseResult<>(true, "成功", one);
+        Optional<AccountModel> optional = jpa.findById(uuid);
+        if (optional.orElse(null) != null)
+            return new ResponseResult<>(true, "成功", optional.get());
+        return new ResponseResult<>(false, "未查询到记录");
     }
 
     @Override
@@ -154,8 +163,8 @@ public class AccountServiceImpl implements AccountService {
                         Predicate p1 = cb.like(root.get("account").as(String.class), "%" + model.getAccount() + "%");
                         predicates.add(cb.and(p1));
                     }
-                    if (model.getUser() != null){
-                        if (model.getUser().getName() != null && !model.getUser().getName().isEmpty()){
+                    if (model.getUser() != null) {
+                        if (model.getUser().getName() != null && !model.getUser().getName().isEmpty()) {
                             Predicate p1 = cb.like(root.get("user").get("name").as(String.class), "%" + model.getUser().getName() + "%");
                             predicates.add(cb.and(p1));
                         }

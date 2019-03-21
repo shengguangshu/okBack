@@ -78,4 +78,42 @@ public class AccountController {
         return service.delete(uuid);
     }
 
+    @ApiOperation(value = "修改")
+//    @RequiresPermissions(value = "account-save")
+    @RequestMapping(value = "/account/{uuid}", method = RequestMethod.PUT)
+    public ResponseResult<AccountModel> update(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
+                                               @PathVariable("uuid") String uuid,
+                                               @ApiParam(value = "实体", required = true, example = "根据业务填写必填项")
+                                               @RequestBody AccountModel model) {
+        model.setUuid(uuid);
+        return service.update(model);
+    }
+
+    /**
+     * 根据id查询
+     *
+     * @param uuid
+     * @return
+     */
+    @ApiOperation(value = "根据主键查询")
+//    @RequiresRoles(value = {"admin"})
+//    @RequiresPermissions(value = "account-delete")
+    @RequestMapping(value = "/account/{uuid}", method = RequestMethod.GET)
+    public ResponseResult<AccountModel> getOne(@ApiParam(value = "账号主键", required = true, example = "后台获取的主键")
+                                               @PathVariable("uuid") String uuid) {
+        return service.findById(uuid);
+    }
+
+    @ApiOperation(value = "根据主键重置密码")
+//    @RequiresRoles(value = {"admin"})
+//    @RequiresPermissions(value = "account-delete")
+    @RequestMapping(value = "/rest/{uuid}", method = RequestMethod.GET)
+    public ResponseResult<AccountModel> rest(@ApiParam(value = "账号主键", required = true, example = "后台获取的主键")
+                                               @PathVariable("uuid") String uuid) {
+        AccountModel model = new AccountModel();
+        model.setUuid(uuid);
+        model.setPassword("123456");
+        return service.update(model);
+    }
+
 }
