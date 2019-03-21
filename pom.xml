@@ -11,7 +11,7 @@
     <groupId>com.yunang</groupId>
     <artifactId>fangda</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>fangda</name>
+    <name>okBack</name>
     <!--设置打包为jar-->
     <packaging>jar</packaging>
     <!--设置打包为war-->
@@ -114,7 +114,7 @@
 
     <build>
         <!--设置打包后的名称-->
-        <finalName>fangda</finalName>
+        <finalName>okBack</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
