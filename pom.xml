@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.yunang</groupId>
-    <artifactId>fangda</artifactId>
+    <artifactId>okBack</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>okBack</name>
     <!--设置打包为jar-->
