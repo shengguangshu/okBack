@@ -40,11 +40,11 @@ public class TagsServiceImpl implements TagsService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<TagsModel> save(TagsModel model) {
-        Optional<AccountModel> optional = accountJpa.findById(model.getAccountModel().getUuid());
-        if (optional.orElse(null) == null) {
-            return new ResponseResult<>(false, "缺失创建人");
-        }
-        model.setAccountModel(optional.get());
+//        Optional<AccountModel> optional = accountJpa.findById(model.getAccountModel().getUuid());
+//        if (optional.orElse(null) == null) {
+//            return new ResponseResult<>(false, "缺失创建人");
+//        }
+//        model.setAccountModel(optional.get());
         model.setSysTime(new Timestamp(System.currentTimeMillis()));
         jpa.save(model);
         return new ResponseResult<>(true, "成功");
@@ -84,7 +84,7 @@ public class TagsServiceImpl implements TagsService {
     @Override
     public ResponseResult<Page<TagsModel>> findAll(int pageNow, int pageSize, TagsModel model) {
         List<Sort.Order> orders = new ArrayList<>();
-        orders.add(new Sort.Order(Sort.Direction.DESC, "systemTimes"));
+        orders.add(new Sort.Order(Sort.Direction.DESC, "sysTime"));
         Specification<TagsModel> spec = queryTj(model);
         PageRequest pageRequest = PageRequest.of(pageNow - 1, pageSize, Sort.by(orders));
         Page<TagsModel> page = jpa.findAll(spec, pageRequest);

@@ -15,6 +15,7 @@ import org.hibernate.annotations.Table;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author: LD
@@ -40,15 +41,15 @@ public class TagsModel implements Serializable {
     @ApiModelProperty(value = "创建日期", example = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "sys_time", length = 32)
-    private Timestamp sysTime;
+    private Date sysTime;
 
-    @ApiModelProperty(value = "创建人", dataType = "com.yunang.fangda.business.account.model.AccountModel")
-    @OneToOne(targetEntity = AccountModel.class, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "accountModel_id", referencedColumnName = "uuid")
-    private AccountModel accountModel;
+//    @ApiModelProperty(value = "创建人", dataType = "com.yunang.fangda.business.account.model.AccountModel")
+//    @OneToOne(targetEntity = AccountModel.class, cascade = {CascadeType.MERGE})
+//    @JoinColumn(name = "accountModel_id", referencedColumnName = "uuid")
+//    private AccountModel accountModel;
 
     @ApiModelProperty(value = "内容", example = "<div>body</div>")
-    @Column(name = "tags_body", length = 16383)
+    @Column(name = "tags_body", length = 16383,columnDefinition = "text")
     private String tagsBody;
 
     @Version

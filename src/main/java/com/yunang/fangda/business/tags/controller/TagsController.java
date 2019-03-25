@@ -61,14 +61,14 @@ public class TagsController {
 
     @ApiOperation(value = "新增")
 //    @RequiresPermissions(value = "account-save")
-    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    @RequestMapping(value = "/tags", method = RequestMethod.POST)
     public ResponseResult<TagsModel> save(@ApiParam(value = "实体", required = true, example = "根据业务填写必填项")
                                           @RequestBody TagsModel model,
                                           HttpServletRequest request) {
         String accId = JWTUtils.getAccId(request);
 //        因为前台没有传递此，可能会为null
-        model.setAccountModel(new AccountModel());
-        model.getAccountModel().setUuid(accId);
+//        model.setAccountModel(new AccountModel());
+//        model.getAccountModel().setUuid(accId);
         return service.save(model);
     }
 
@@ -81,7 +81,7 @@ public class TagsController {
     @ApiOperation(value = "根据主键删除")
 //    @RequiresRoles(value = {"admin"})
 //    @RequiresPermissions(value = "account-delete")
-    @RequestMapping(value = "/account/{uuid}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/tags/{uuid}", method = RequestMethod.DELETE)
     public ResponseResult<TagsModel> delete(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                             @PathVariable("uuid") String uuid) {
         return service.delete(uuid);
@@ -89,7 +89,7 @@ public class TagsController {
 
     @ApiOperation(value = "修改")
 //    @RequiresPermissions(value = "account-save")
-    @RequestMapping(value = "/account/{uuid}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/tags/{uuid}", method = RequestMethod.PUT)
     public ResponseResult<TagsModel> update(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                             @PathVariable("uuid") String uuid,
                                             @ApiParam(value = "实体", required = true, example = "根据业务填写必填项")
@@ -107,7 +107,7 @@ public class TagsController {
     @ApiOperation(value = "根据主键查询")
 //    @RequiresRoles(value = {"admin"})
 //    @RequiresPermissions(value = "account-delete")
-    @RequestMapping(value = "/account/{uuid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/tags/{uuid}", method = RequestMethod.GET)
     public ResponseResult<TagsModel> getOne(@ApiParam(value = "主键", required = true, example = "后台获取的主键")
                                             @PathVariable("uuid") String uuid) {
         return service.findById(uuid);
