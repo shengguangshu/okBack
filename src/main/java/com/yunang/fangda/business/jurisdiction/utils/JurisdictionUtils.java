@@ -35,10 +35,12 @@ public class JurisdictionUtils {
         list.add(new JurisdictionModel("11", "员工分页", "account-page", "7", 1, null));
 
 
-        list.add(new JurisdictionModel("12", "标签管理", "tags", "0", 0, null));
+//        list.add(new JurisdictionModel("12", "标签管理", "tags", "0", 0, null));
 
-        list.add(new JurisdictionModel("13", "品牌管理", "brand", "0", 0, null));
-        list.add(new JurisdictionModel("14", "型号管理", "number", "0", 0, null));
+        list.add(new JurisdictionModel("12", "车辆管理", "0", "0", 0, null));
+        list.add(new JurisdictionModel("13", "品牌管理", "brand", "12", 0, null));
+        list.add(new JurisdictionModel("14", "型号管理", "number", "12", 0, null));
+        list.add(new JurisdictionModel("15", "车辆简介管理", "carIntroduction", "12", 0, null));
         return list;
     }
 }

@@ -16,4 +16,5 @@ import java.util.List;
 public interface CarBrandJpa extends JpaSpecificationExecutor<CarBrandModel>,
         JpaRepository<CarBrandModel, String> {
 
+    List<CarBrandModel> findByBrandName(String brandName);
 }

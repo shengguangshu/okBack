@@ -35,6 +35,10 @@ public class CarBrandServiceImpl implements CarBrandService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<CarBrandModel> save(CarBrandModel model) {
+        List<CarBrandModel> list = jpa.findByBrandName(model.getBrandName());
+        if (list != null && list.size() > 0) {
+            return new ResponseResult<>(false, "名称重复");
+        }
         jpa.save(model);
         return new ResponseResult<>(true, "成功", null);
     }
