@@ -36,6 +36,9 @@ public class JurisdictionUtils {
 
 
         list.add(new JurisdictionModel("12", "标签管理", "tags", "0", 0, null));
+
+        list.add(new JurisdictionModel("13", "品牌管理", "brand", "0", 0, null));
+        list.add(new JurisdictionModel("14", "型号管理", "number", "0", 0, null));
         return list;
     }
 }

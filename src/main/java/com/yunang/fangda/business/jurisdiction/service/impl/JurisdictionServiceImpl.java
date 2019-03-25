@@ -1,5 +1,6 @@
 package com.yunang.fangda.business.jurisdiction.service.impl;
 
+import com.yunang.fangda.business.authority.jpa.AuthorityJpa;
 import com.yunang.fangda.business.jurisdiction.jpa.JurisdictionJpa;
 import com.yunang.fangda.business.jurisdiction.model.JurisdictionModel;
 import com.yunang.fangda.business.jurisdiction.model.JurisdictionQueryModel;
@@ -24,10 +25,13 @@ public class JurisdictionServiceImpl implements JurisdictionService {
 
     @Autowired
     private JurisdictionJpa jpa;
+    @Autowired
+    private AuthorityJpa authorityJpa;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult<String> setJurs(List<JurisdictionModel> list) {
+        authorityJpa.deleteAll();
         jpa.deleteAll();
         jpa.saveAll(list);
         return new ResponseResult<>(true, "成功");
