@@ -1,6 +1,6 @@
 package com.yunang.fangda.feginapi.interfaces;
 
-import feign.Body;
+import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 
@@ -17,5 +17,10 @@ public interface TestInterface {
                     @Param("sign") String sign,
                     @Param("stuno") String stuno,
                     @Param("stuname") String stuname);
+
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @RequestLine("POST /login/login")
+    Object tst(@Param("account") String account,
+               @Param("password") String password);
 
 }

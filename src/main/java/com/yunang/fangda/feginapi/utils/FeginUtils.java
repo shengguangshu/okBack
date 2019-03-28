@@ -12,7 +12,7 @@ import feign.jackson.JacksonEncoder;
  * @description:
  */
 public class FeginUtils {
-    public final static String URL = "http://192.168.1.12";
+    public final static String URL = "http://192.168.1.66:9002";
 
     public Feign.Builder object = Feign.builder()
             .encoder(new JacksonEncoder())
