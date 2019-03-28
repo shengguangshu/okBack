@@ -14,8 +14,8 @@ public class TestInterfaceImpl {
     private TestInterface testInterface = new FeginUtils().object.target(TestInterface.class, FeginUtils.URL);
 
     public void test() {
-        String owner = testInterface.getOwner("20180101010101", "", "06038", "小高");
-        System.out.println(owner);
+        Object object = testInterface.getOwner("20180101010101", "132");
+        System.out.println(object.toString());
     }
 
     public void test2(){

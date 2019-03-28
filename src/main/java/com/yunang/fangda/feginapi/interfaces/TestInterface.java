@@ -13,10 +13,8 @@ public interface TestInterface {
 
     //    @Headers({"Content-Type: application/json","Accept: application/json"})
     @RequestLine("POST /api/query")
-    String getOwner(@Param("time") String time,
-                    @Param("sign") String sign,
-                    @Param("stuno") String stuno,
-                    @Param("stuname") String stuname);
+    Object getOwner(@Param("time") String time,
+                    @Param("sign") String sign);
 
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @RequestLine("POST /login/login")
