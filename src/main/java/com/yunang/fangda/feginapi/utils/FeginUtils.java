@@ -20,10 +20,4 @@ public class FeginUtils {
             .options(new Request.Options(1000, 3500))
             .retryer(new Retryer.Default(5000, 5000, 3));
 //            .target(Object.class, "http://192.168.1.12:8080");
-//    Feign.builder()
-//            .encoder(new JacksonEncoder())
-//            .decoder(new JacksonDecoder())
-//            .options(new Request.Options(1000, 3500))
-//            .retryer(new Retryer.Default(5000, 5000, 3))
-//            .target(t.class, "http://192.168.1.12:8080");
 }
