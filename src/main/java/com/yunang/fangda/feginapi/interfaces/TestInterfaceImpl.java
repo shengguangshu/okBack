@@ -37,7 +37,7 @@ public class TestInterfaceImpl {
      * @throws IOException
      */
     public static String utils(String str, String sign, String url1) throws IOException {
-        URL url = null;
+        URL url;
         HttpURLConnection httpurlconnection = null;
         DataInputStream in = null;
         try {
