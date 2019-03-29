@@ -1,4 +1,4 @@
-package com.yunang.fangda.feginapi.interfaces;
+package com.yunang.fangda.HttpURLConnection;
 
 import org.springframework.util.DigestUtils;
 
@@ -13,10 +13,10 @@ import java.nio.charset.StandardCharsets;
  * @date:
  * @description:
  */
-public class TestInterfaceImpl {
+public class HttpURLConnectionUtils {
 
     public static void main(String[] args) {
-        TestInterfaceImpl testInterface = new TestInterfaceImpl();
+        HttpURLConnectionUtils testInterface = new HttpURLConnectionUtils();
 //        testInterface.query();
         testInterface.pay();
     }
