@@ -16,6 +16,15 @@ import java.nio.charset.StandardCharsets;
 public class TestInterfaceImpl {
 
     public static void main(String[] args) {
+        TestInterfaceImpl testInterface = new TestInterfaceImpl();
+//        testInterface.query();
+        testInterface.pay();
+    }
+
+    /**
+     * 查询余额测试
+     */
+    private void query() {
         String stuno = "06038";
         String time = "20170327152505";
         String stuname = "小高";
@@ -28,6 +37,42 @@ public class TestInterfaceImpl {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 充值测试
+     */
+    private void pay() {
+        String cardNo = "06038";
+        String time = "20170327152505";
+        String stuname = "小高";
+        String money = "500";
+        String tranNo = "20170327152505";
+        String str = stuname + "|" + cardNo + "|" + time + "|" + money + "|" + tranNo + "|" + "123456";
+        String str2 = "stuname=" + stuname + "&CardNo=" + cardNo + "&time=" + time + "&MONEY=" + money + "&tranNo=" + tranNo + "&";
+        try {
+            String utils = utils(str2, str, "http://192.168.1.12/api/pay/PAY.asp");
+            System.out.println(utils);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    private void loss() {
+//        String time = "20170327152505";
+//        String cardNo = "06038";
+//        String stuname = "小高";
+//        String flag = "1";//1 挂失 0解除
+//        String cardPwd = "123456";
+//        String str = stuname + "|" + cardNo + "|" + time + "|" + flag + "|" + cardPwd + "|" + "123456";
+//        String str2 = "stuname=" + stuname + "&CardNo=" + cardNo + "&time=" + time + "&flag=" + flag + "&cardPwd=" + cardPwd + "&";
+//        try {
+//            String utils = utils(str2, str, "http://192.168.1.12/api/loss/LOSS.asp");
+//            System.out.println(utils);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
 
     /**
      * @param str  参数串(不包含加密) "time=" + time + "&" + "stuname=" + stuname + "&" + "stuno=" + stuno + "&"
@@ -59,7 +104,7 @@ public class TestInterfaceImpl {
             int code = httpurlconnection.getResponseCode();
 
             if (code == 200) {
-                String cookie = httpurlconnection.getHeaderField("Set-Cookie ");
+//                String cookie = httpurlconnection.getHeaderField("Set-Cookie ");
                 // httpurlconnection.setRequestProperty( "Cookie", cookie);
 
                 in = new DataInputStream(httpurlconnection
@@ -72,6 +117,7 @@ public class TestInterfaceImpl {
                 return null;
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         } finally {
             if (in != null) {
