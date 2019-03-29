@@ -1,8 +1,11 @@
 package com.yunang.fangda.feginapi.interfaces;
 
+import feign.Body;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author: LD
@@ -12,9 +15,20 @@ import feign.RequestLine;
 public interface TestInterface {
 
     //    @Headers({"Content-Type: application/json","Accept: application/json"})
-    @RequestLine("POST /api/query")
-    Object getOwner(@Param("time") String time,
-                    @Param("sign") String sign);
+//    @RequestLine("POST api/query/QUERY.asp")
+//    Object getOwner(@Param("time") String time,
+//                    @Param("sign") String sign,
+//                    @Param("stuno") String stuno,
+//                    @Param("stuname") String stuname);
+
+    @RequestLine("POST api/query/QUERY.asp")
+    Object getOwner(String time,
+                                String sign,
+                                String stuno,
+                                String stuname);
+
+    @RequestLine("POST test.asp")
+    Object test();
 
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @RequestLine("POST /login/login")
